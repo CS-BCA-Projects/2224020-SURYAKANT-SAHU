@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Donate Blood</h1>
+            <p>A drop for you, an ocean for someone else.</p>
+            <img src="/images/blood.avif" alt="Blood Donation Illustration "
+                style="height: 220px; mix-blend-mode:multiply;">
+        </div>
+        <div class="right-panel">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="NameXYZ@gmail.com" required>
+                </div>
+
+                <div class="input-group password-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="**********" required>
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                </div>
+                <div class="forget"><a href="/forgot-password">Forgot your password?</a></div>
+                <button type="submit" class="btn">Log In</button>
+            </form>
+
+        </div>
+    </div>
+    <script>
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                this.classList.remove("fa-eye");
+                this.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                this.classList.remove("fa-eye-slash");
+                this.classList.add("fa-eye");
+            }
+        });
+        function login() {
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            let message = document.getElementById('message');
+
+            if (username === '' || password === '') {
+                message.innerText = 'All fields are required!';
+                return;
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevents page reload
+
+            // Get input values
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Send data to the backend
+            const response = await fetch(`http://localhost:5000/users/login`, {
+                method: "POST",
+                credentials: "include",  // Required for cookies!
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const result = await response.json();
+            setTimeout(() => {
+                window.location.href = "/userprofile";
+            }, 1000);
+            alert(result.message); // Show success/error message
+        });
+    </script>
+</body>
+
+</html>

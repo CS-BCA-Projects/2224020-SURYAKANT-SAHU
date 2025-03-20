@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../public/css/admin.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            <img src="profile.jpg" alt="Admin Profile">
+            <h3>Must University</h3>
+            <p>Esraa.Mamdouh@gmail.com</p>
+        </div>
+        <nav>
+            <ul>
+                <li class="active">Home</li>
+                <li>Donors</li>
+                <li>Campaign</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="main-content">
+        <header>
+            <h2>Dashboard</h2>
+        </header>
+        <div class="cards">
+            <div class="card red">Donors <span>4</span></div>
+            <div class="card blue">Campaigns <span>3</span></div>
+            <div class="card green">New Comments <span>36</span></div>
+            <div class="card yellow">New Visitors <span>87</span></div>
+        </div>
+        <section class="donation-info">
+            <h3>Current Blood Donation Info</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th>Admin</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Wadah</td>
+                        <td class="status pending">Pending</td>
+                        <td>Esraa Mamdouh</td>
+                        <td class="progress green"></td>
+                    </tr>
+                    <tr>
+                        <td>Fatih Mohsen</td>
+                        <td class="status pending">Pending</td>
+                        <td>Esraa Mamdouh</td>
+                        <td class="progress blue"></td>
+                    </tr>
+                    <tr>
+                        <td>Disa Tourna</td>
+                        <td class="status pending">Pending</td>
+                        <td>Esraa Mamdouh</td>
+                        <td class="progress orange"></td>
+                    </tr>
+                    <tr>
+                        <td>Arwa Bahaa</td>
+                        <td class="status pending">Pending</td>
+                        <td>Esraa Mamdouh</td>
+                        <td class="progress yellow"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <script>
+        /* script.js */
+        document.querySelectorAll("nav ul li").forEach(item => {
+            item.addEventListener("click", function () {
+                document.querySelector("nav ul li.active").classList.remove("active");
+                this.classList.add("active");
+            });
+        });
+    </script>
+</body>
+
+</html>

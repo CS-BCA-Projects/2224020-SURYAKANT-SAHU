@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/adminsignup.css">
+    <title>Sign In Page</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Sign In</h2>
+            <form id="loginForm">  
+                <label for="email">Email</label>
+                <input type="email" placeholder="Email" required id="email">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Password" required id="password">
+                <a href="/forgot-password" class="forgot-password">Forgot your password?</a>
+                <button type="submit">Sign In</button>
+            </form>
+
+        </div>
+        <div class="info-section">
+            <h2>Admin SignIn </h2>
+        </div>
+    </div>
+    <script >
+       document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    // Get input values
+    const Email = document.querySelector("input[type='email']").value.trim();
+    const Password = document.querySelector("input[type='password']").value.trim();
+
+    // Basic validation
+    if (!Email || !Password) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    try {
+        // Send request to backend
+        const response = await fetch("http://localhost:5000/admin/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ Email, Password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Login successful!");
+            window.location.href = "/admin/dashboard"; // Redirect after login
+        } else {
+            alert(data.msg || "Invalid email or password.");
+        }
+    } catch (error) {
+        console.error("Login error:", error);
+        alert("Something went wrong. Please try again.");
+    }
+});
+
+    </script>
+</body>
+
+</html>

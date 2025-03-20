@@ -1,0 +1,72 @@
+/* styles.css */
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+.sidebar {
+    width: 250px;
+    background: #d32f2f;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+}
+.profile {
+    text-align: center;
+}
+.profile img {
+    width: 80px;
+    border-radius: 50%;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+nav ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+nav ul li.active, nav ul li:hover {
+    background: #b71c1c;
+}
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+.cards {
+    display: flex;
+    gap: 15px;
+}
+.card {
+    padding: 20px;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    flex: 1;
+}
+.red { background: #e57373; }
+.blue { background: #64b5f6; }
+.green { background: #81c784; }
+.yellow { background: #ffb74d; }
+.donation-info table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+.donation-info th, .donation-info td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+.status.pending { color: orange; }
+.progress {
+    height: 10px;
+    width: 100%;
+    background: grey;
+}
+.progress.green { background: green; }
+.progress.blue { background: blue; }
+.progress.orange { background: orange; }
+.progress.yellow { background: yellow; }
+
+

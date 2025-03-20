@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/signup.css">
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Donate Blood</h1>
+            <p>A drop for you, an ocean for someone else.</p>
+            <img src="/images/blood-donation.png" alt="Blood Donation Illustration " style="height: 220px;">
+        </div>
+        <div class="right-panel">
+            <h2>Sign Up</h2>
+            <p class="center">Create Account</p>
+            <form id="signupForm">
+                <div class="input-group">
+                    <label for="username">User Name</label>
+                    <input type="text" id="username" name="username" placeholder="NameXYZ" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="example@gmail.com" required>
+                </div>
+                <div class="input-group password-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="**********" required>
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+
+
+            <p class="login-link">Already have an account? <a href="/users/login">Log In</a></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                this.classList.remove("fa-eye");
+                this.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                this.classList.remove("fa-eye-slash");
+                this.classList.add("fa-eye");
+            }
+        });
+
+        document.getElementById("signupForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevents page reload
+
+            // Get input values
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Send data to the backend
+            const response = await fetch(`http://localhost:5000/users/signup`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            const result = await response.json();
+            alert(result.msg); // Show success/error message
+            setTimeout(() => {
+                    window.location.href = "/users/login";
+                }, 1000);
+        });
+
+    </script>
+</body>
+
+</html>

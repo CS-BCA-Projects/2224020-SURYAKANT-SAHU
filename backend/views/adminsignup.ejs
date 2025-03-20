@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/adminsignup.css">
+    <title>Admin Signup</title>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Admin Signup</h2>
+            <form id="signupForm">
+                <label for="fullName">Full Name</label>
+                <input type="text" name="fullName" id="fullName" placeholder="Full Name" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+
+                <label for="adminKey">Admin Key</label>
+                <input type="text" name="adminKey" id="adminKey" placeholder="Enter Admin Key" required>
+
+                <button type="submit" id="signupButton">Create Admin Account</button>
+            </form>
+            <p class="login-link">Already have an account? <a href="/admin/login">Log In</a></p>
+
+        </div>
+        <div class="info-section">
+            <h2>Admin Signup</h2>
+        </div>
+    </div>
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("signupForm");
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form input values
+        const FullName = document.getElementById("fullName").value.trim();
+        const Email = document.getElementById("email").value.trim();
+        const Password = document.getElementById("password").value.trim();
+        const AdminKey = document.getElementById("adminKey").value.trim();
+        
+        // Basic validation
+        if (!FullName || !Email || !Password || !AdminKey) {
+            alert("All fields are required!");
+            return;
+        }
+
+        try {
+            // Send request to backend
+            const response = await fetch("http://localhost:5000/admin/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ FullName, Email, Password, AdminKey }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Admin account created successfully!");
+                window.location.href = "/admin/login"; // Redirect to admin login page
+            } else {
+                alert(data.msg || "Signup failed!");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
