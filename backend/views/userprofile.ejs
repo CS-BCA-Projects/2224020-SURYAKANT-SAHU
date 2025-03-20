@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Donation User Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <title><%= user.name %>'s Dashboard</title>
+    
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -69,53 +69,46 @@
         button:hover {
             background-color: #b71c1c;
         }
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: block;
+            margin: 10px auto;
+            border: 3px solid #d32f2f;
+        }
+        .profile-info {
+            text-align: center;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Sidebar -->
     <div class="sidebar">
         <h2>Bloodlink.com</h2>
         <ul>
-            <li><a href="../public/dregisterf.html">Donor Registeration Form</a></li>
-            <li><a href="#profile">Profile</a></li>
-            <li><a href="#profile">Edit Profile</a></li>
-            <li><a href="#logout">Logout</a></li>
+            <li><a href="/donor/register">Donor Registration Form</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/edit-profile">Edit Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
     
+    <!-- Main Content -->
     <div class="main-content">
-        
         <section id="profile" class="card">
             <h2>Profile</h2>
-            <div>
-                <img src="" alt="pofile image">
-                <p>Name: <span id="name">John Doe</span></p>
-                <p>Blood Group: <span id="blood-group">A+</span></p>
+            <div class="profile-info">
+                <img src="<%= user.profileImage || '/default-profile.jpg' %>" alt="Profile Image" class="profile-image">
+                <p><strong>Name:</strong> <span id="name"><%= user.name %></span></p>
+                <p><strong>Blood Group:</strong> <span id="blood-group"><%= user.bloodGroup %></span></p>
+                <p><strong>Email:</strong> <span id="email"><%= user.email %></span></p>
+                <p><strong>Phone:</strong> <span id="phone"><%= user.phone %></span></p>
             </div>
         </section>
-
-        
     </div>
-    
-    <script>
-        document.getElementById("appointment-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const date = document.getElementById("date").value;
-            document.getElementById("appointment-message").innerText = "Appointment booked for " + date;
-        });
-        
-        document.getElementById("request-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            document.getElementById("request-message").innerText = "Blood request submitted successfully!";
-        });
-        
-        function calculateNextDonation() {
-            const lastDonationDate = new Date("2024-01-01");
-            const nextDonationDate = new Date(lastDonationDate);
-            nextDonationDate.setMonth(nextDonationDate.getMonth() + 3);
-            document.getElementById("next-donation-date").innerText = nextDonationDate.toDateString();
-        }
-        
-        calculateNextDonation();
-    </script>
+
 </body>
 </html>

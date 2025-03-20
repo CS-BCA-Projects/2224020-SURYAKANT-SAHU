@@ -19,6 +19,7 @@ import adminsignup from './routes/adminSignup_Routes.js';
 import adminsignin from './routes/adminLogin_Routes.js';
 import adminforgot from './routes/adminForgot_Routes.js';
 import adminreset from './routes/adminReset_Routes.js';
+import refreshtoken from './routes/refreshRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -61,6 +62,7 @@ app.use("/admin", adminsignup);
 app.use("/admin", adminsignin);
 app.use("/admin", adminforgot);
 app.use("/admin", adminreset);
+app.use("/api", refreshtoken);
 
 
 // Default Route (EJS Test)
@@ -91,10 +93,6 @@ app.get("/admin/signup", (req, res) => {
 app.get("/admin/login", (req, res) => {
     res.render("adminlogin");
 });
-app.get("/userprofile", (req, res) => {
-    res.render("userprofile");
-});
-
 
 
 
