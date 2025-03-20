@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/profile", authenticateUser, async (req, res) => {
     try {
         // Fetch user data from the database using JWT user ID
-        const donor = await Donor.findById(req.user.id).select("-Password"); // Exclude password
+        const donor = await Donor.findById(req.user.id).select("-Password,-refreshToken"); // Exclude password
 
         if (!donor) {
             return res.status(404).json({ message: "❌ User not found" });

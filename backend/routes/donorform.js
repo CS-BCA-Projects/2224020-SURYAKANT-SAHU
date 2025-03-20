@@ -1,6 +1,7 @@
 import express from "express";
 import Donorregister from "../models/donorregisterform.js";
 import nodemailer from "nodemailer";
+import { authenticateUser } from "../middleware/authMiddleware.js";
 
 const router = express.Router(); // FIXED: use express.Router()
 
@@ -31,7 +32,7 @@ const sendWelcomeEmail = async (userEmail) => {
   }
 };
 
-router.post("/donorform", async (req, res) => {
+router.post("/donorform", authenticateUser, async (req, res) => {
   try {
     const {
       First_Name,
@@ -51,7 +52,7 @@ router.post("/donorform", async (req, res) => {
     } = req.body;
 
     // Check if donor already exists
-    let existingDonor = await Donorregister.findOne({ Email });
+    const existingDonor = await Donor.findOne({ userId: req.user.id });
     if (existingDonor) {
       return res.status(400).json({ msg: "You have already registered" });
     }

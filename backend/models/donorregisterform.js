@@ -6,6 +6,7 @@ function capitalize(str) {
 }
 
 const UserSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "Donor", required: true }, // Linking User
   First_Name: { type: String, required: true },
   Last_Name: { type: String, required: true },
   BloodGroup: { type: String, required: true },

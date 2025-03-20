@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
         res.status(200)
             .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: "None" })
             .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, sameSite: "None" })
-            .redirect("/profile");  // Redirect after login
+            .redirect("/api/profile");  // Redirect after login
 
     } catch (error) {
         res.status(500).json({ message: "❌ Server error!" });
