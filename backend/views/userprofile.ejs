@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= user.name %>'s Dashboard</title>
+    <title><%= user.username %>'s Dashboard</title>
     
     <style>
         body {
@@ -78,9 +78,18 @@
             border: 3px solid #d32f2f;
         }
         .profile-info {
-            text-align: center;
             font-size: 18px;
         }
+        .logout_button{
+            cursor: grab;
+        }
+        .profile-info{
+            border: 2px solid black;
+        }
+        .info_container{
+            margin-left: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -89,10 +98,10 @@
     <div class="sidebar">
         <h2>Bloodlink.com</h2>
         <ul>
-            <li><a href="/donor/register">Donor Registration Form</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/edit-profile">Edit Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="/donor/donorform">Donor Registration Form</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="">Notification</a></li>
+            <li><a href="" id="logout_button">Logout</a></li>
         </ul>
     </div>
     
@@ -100,15 +109,53 @@
     <div class="main-content">
         <section id="profile" class="card">
             <h2>Profile</h2>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyCixyM2urliFC1w0DyNMJpBRMOXFizr3FR8aRIFfcDUGBzEaXcV6mt4gVWRqGAqqu4PI&usqp=CAU" alt="Profile Image" class="profile-image">
+            <p> <span  id="username" style=" position: relative;
+                left: 47.5%;
+                bottom: 18px;
+                font-size: 27px;
+                font-weight: 700;"> <%= user.username %></span></p>
             <div class="profile-info">
-                <img src="<%= user.profileImage || '/default-profile.jpg' %>" alt="Profile Image" class="profile-image">
-                <p><strong>Name:</strong> <span id="name"><%= user.name %></span></p>
-                <p><strong>Blood Group:</strong> <span id="blood-group"><%= user.bloodGroup %></span></p>
-                <p><strong>Email:</strong> <span id="email"><%= user.email %></span></p>
-                <p><strong>Phone:</strong> <span id="phone"><%= user.phone %></span></p>
+
+                <div class="info_container">
+                    <p><strong>Name:</strong> <span id="name"><%= userinfo.First_Name %> <%= userinfo.Last_Name %></span></p>
+                    <p><strong>Blood Group:</strong> <span id="blood-group"><%= userinfo.BloodGroup %></span></p>
+                    <p><strong>Email:</strong> <span id="email"><%= user.email %></span></p>
+                    <p><strong>ContactNo:</strong> <span id="phone"><%= userinfo.ContactNo %></span></p>
+                    <p><strong>Date of Birth:</strong> <span id="birth"><%= userinfo.DOB %></span></p>
+                    <p><strong>Age:</strong> <span id="age"><%= userinfo.Age %></span></p>
+                    <p><strong>Gender:</strong> <span id="gender"><%= userinfo.Gender %></span></p>
+                    <p><strong>Address:</strong> <span id="address"><%= userinfo.State %>,<%= userinfo.District %>,
+                        <%= userinfo.Block %>,<%= userinfo.Pincode %></span></p>
+                    <p><strong>Weight:</strong> <span id="weight"><%= userinfo.weight %></span></p>   
+                    <p><strong>Profession:</strong> <span id="profession"><%= userinfo.Profession %></span></p>   
+                </div>
+
             </div>
         </section>
     </div>
+<script>
+      document.getElementById("logout_button").addEventListener("click", async () => {
+    try {
+        const response = await fetch("http://localhost:5000/api/logout", {
+            method: "POST",
+            credentials: "include" // ✅ Important for cookies
+        });
 
+        const data = await response.json(); // ✅ Parse JSON response
+
+        if (response.ok) {
+            alert(data.msg); // ✅ Properly alert message
+            window.location.href = "/users/login"; // Redirect to login after logout
+        } else {
+            alert(`Error: ${data.error}`);
+        }
+    } catch (error) {
+        alert("Logout failed. Please try again.");
+        console.error("Logout error:", error);
+    }
+});
+
+</script>
 </body>
 </html>

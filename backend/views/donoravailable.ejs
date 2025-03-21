@@ -90,6 +90,70 @@
             background-color: #b71c1c;
             color: white;
         }
+
+        .open-btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* The popup form - hidden by default */
+        .popup-form {
+            display: none;
+            /* Initially hidden */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Input fields */
+        .popup-form input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: block;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            padding: 10px;
+            width: 100%;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Close button */
+        .close-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            float: right;
+        }
+        /* Dynamic Email Column */
+        .email-display {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -172,7 +236,17 @@
             </tbody>
         </table>
     </div>
-
+    <!-- Popup Input Menu -->
+    <div class="popup-form" id="inputMenu">
+        <button class="close-btn" onclick="hideMenu()">X</button>
+        <h3>Enter Details</h3>
+        <!-- Dynamic Email Column -->
+        <div class="email-display" id="emailColumn"></div>
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="tel" id="contact" placeholder="Enter Contact">
+        <button class="submit-btn" onclick="submitForm()">Submit</button>
+    </div>
     <script>
         // Static District Data
         const districtData = {
@@ -202,17 +276,15 @@
             "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli"],
             "Telangana": ["Hyderabad", "Warangal", "Karimnagar", "Nizamabad"],
             "Tripura": ["Agartala", "Udaipur", "Dharmanagar", "Kailashahar"],
-            "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra","Balrampur"],
+            "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Balrampur"],
             "Uttarakhand": ["Dehradun", "Haridwar", "Nainital", "Almora"],
             "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Siliguri"]
         };
 
-
-
         function updateDistricts() {
             let state = document.getElementById("stateDropdown").value;
             let districtDropdown = document.getElementById("districtDropdown");
-            
+
             // Step 1: Clear the existing district options
             districtDropdown.innerHTML = '<option value="">Select District</option>';
 
@@ -228,64 +300,81 @@
             }
         }
 
-    async function searchBloodStock() {
-    const State = document.getElementById("stateDropdown").value;
-    const District = document.getElementById("districtDropdown").value;
-    const BloodGroup = document.getElementById("bloodGroup").value;
-        
-    let query = `?State=${encodeURIComponent(State)}&District=${encodeURIComponent(District)}&BloodGroup=${encodeURIComponent(BloodGroup)}`;
-    
-    try {
-        const response = await fetch(`http://localhost:5000/donor/donors${query}`);
-        const donors = await response.json();
-        updateDonorTable(donors);
-    } catch (error) {
-        console.error("Error fetching donors:", error);
-    }
-}
+        async function searchBloodStock() {
+            const State = document.getElementById("stateDropdown").value;
+            const District = document.getElementById("districtDropdown").value;
+            const BloodGroup = document.getElementById("bloodGroup").value;
 
-function updateDonorTable(donors) {
-    let tableBody = document.getElementById("bloodStockTable");
-    tableBody.innerHTML = "";
+            let query = `?State=${encodeURIComponent(State)}&District=${encodeURIComponent(District)}&BloodGroup=${encodeURIComponent(BloodGroup)}`;
 
-    if (donors.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="6">No Data Available</td></tr>`;
-        return;
-    }
+            try {
+                const response = await fetch(`http://localhost:5000/donor/donors${query}`);
+                const donors = await response.json();
+                updateDonorTable(donors);
+            } catch (error) {
+                console.error("Error fetching donors:", error);
+            }
+        }
 
-    donors.forEach((donor, index) => {
-        let row = `<tr>
+        function updateDonorTable(donors) {
+            let tableBody = document.getElementById("bloodStockTable");
+            tableBody.innerHTML = "";
+
+            if (donors.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6">No Data Available</td></tr>`;
+                return;
+            }
+
+            donors.forEach((donor, index) => {
+                let row = `<tr>
             <td>${index + 1}</td>
             <td>${donor.First_Name}   ${donor.Last_Name}</td>
             <td>${donor.BloodGroup}</td>
             <td>${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</td>
-            <td><button onclick="requestBlood('${donor.Email}')">Request</button></td>
+            <td><button onclick="showMenu('${donor.Email}')">Request</button></td>
         </tr>`;
-        tableBody.innerHTML += row;
-    });
-}
-async function requestBlood(donorEmail) {
-    const requesterName = prompt("Enter your name:");
-    const requesterContact = prompt("Enter your email address:");
+                tableBody.innerHTML += row;
+            });
+        }
+        async function requestBlood(donorEmail, name, contact , email) {
 
-    if (!requesterName || !requesterContact) {
-        alert("All fields are required!");
-        return;
-    }
+            if (!name || !contact || !email) {
+                alert("All fields are required!");
+                return;
+            }
 
-    try {
-        const response = await fetch("http://localhost:5000/donor/request_blood", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ donorEmail, requesterName, requesterContact })
-        });
+            try {
+                const response = await fetch("http://localhost:5000/donor/request_blood", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ donorEmail, name, contact , email})
+                });
 
-        const data = await response.json();
-        alert(data.message);
-    } catch (error) {
-        console.error("Error requesting blood:", error);
-    }
-}
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                console.error("Error requesting blood:", error);
+            }
+        }
+        function showMenu(donorEmail) {
+            document.getElementById("inputMenu").style.display = "block";
+            document.getElementById("emailColumn").innerText = "Email: " + donorEmail;
+        }
+
+        // Function to hide the popup menu
+        function hideMenu() {
+            document.getElementById("inputMenu").style.display = "none";
+        }
+
+        // Function to handle form submission
+        function submitForm() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const contact = document.getElementById("contact").value;
+            const donorEmail = document.getElementById("emailColumn").innerText;
+
+            requestBlood(donorEmail, name, contact , email)
+        }
 
     </script>
 </body>

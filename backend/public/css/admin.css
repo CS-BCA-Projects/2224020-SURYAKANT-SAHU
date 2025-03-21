@@ -4,6 +4,12 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
 }
+#logout_button{
+    list-style: none;
+    text-decoration: none;
+    color: white;
+    font-size: 22px;
+}
 .sidebar {
     width: 250px;
     background: #d32f2f;
@@ -25,6 +31,12 @@ nav ul {
 nav ul li {
     padding: 10px;
     cursor: pointer;
+    font-size: 22px;
+}
+ul li a{
+    color: white;
+    text-decoration: none;
+    list-style: none;
 }
 nav ul li.active, nav ul li:hover {
     background: #b71c1c;

@@ -17,9 +17,10 @@ const transporter = nodemailer.createTransport({
 
 // Request blood from a donor
 router.post("/request_blood", async (req, res) => {
-    const { donorEmail, requesterName, requesterContact } = req.body;
-
-    if (!donorEmail || !requesterName || !requesterContact) {
+    const { donorEmail, name, contact , email} = req.body;
+    console.log("Details are :", { donorEmail, name, contact , email} );
+    
+    if (!donorEmail || !name || !contact || !email) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -28,7 +29,7 @@ router.post("/request_blood", async (req, res) => {
         from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
         to: donorEmail,
         subject: "Blood Donation Request",
-        text: `Dear Donor,\n\n${requesterName} is requesting a blood donation.\n\nContact: ${requesterContact}`
+        text: `Dear Donor,\n\n${name} is requesting for a blood donation.\n\nContact: ${contact}\nEmail : ${email}`
     };
 
     try {

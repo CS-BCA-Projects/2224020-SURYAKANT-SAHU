@@ -27,13 +27,23 @@
         </div>
     </div>
     <script >
-       document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    document.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", function () {
+            this.classList.add("clicked"); // Change color on click
+            
+            setTimeout(() => {
+                this.classList.remove("clicked"); // Revert after 1 sec
+            }, 1000);
+        });
+    });
+    
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent form from refreshing the page
-
+    
     // Get input values
-    const Email = document.querySelector("input[type='email']").value.trim();
-    const Password = document.querySelector("input[type='password']").value.trim();
-
+    const Email = document.getElementById("email").value.trim();
+    const Password = document.getElementById("password").value.trim();
+        
     // Basic validation
     if (!Email || !Password) {
         alert("Please fill in all fields.");
@@ -51,10 +61,10 @@
         const data = await response.json();
 
         if (response.ok) {
-            alert("Login successful!");
-            window.location.href = "/admin/dashboard"; // Redirect after login
+            alert(data.message)
+            window.location.href = data.redirectUrl;
         } else {
-            alert(data.msg || "Invalid email or password.");
+            alert(data.message || "Invalid email or password.");
         }
     } catch (error) {
         console.error("Login error:", error);

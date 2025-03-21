@@ -1,7 +1,7 @@
 import express from "express";
 import Donorregister from "../models/donorregisterform.js";
 import nodemailer from "nodemailer";
-import { authenticateUser } from "../middleware/authMiddleware.js";
+import {authenticateUser} from "../middlewares/authMiddleware.js"; 
 
 const router = express.Router(); // FIXED: use express.Router()
 
@@ -52,13 +52,14 @@ router.post("/donorform", authenticateUser, async (req, res) => {
     } = req.body;
 
     // Check if donor already exists
-    const existingDonor = await Donor.findOne({ userId: req.user.id });
+    const existingDonor = await Donorregister.findOne({ userId: req.user._Id });
     if (existingDonor) {
       return res.status(400).json({ msg: "You have already registered" });
     }
 
     // Create new donor document
     const newDonor = new Donorregister({
+      userId: req.user.userId, // ✅ FIXED: Link donor to user
       First_Name,
       Last_Name,
       BloodGroup,

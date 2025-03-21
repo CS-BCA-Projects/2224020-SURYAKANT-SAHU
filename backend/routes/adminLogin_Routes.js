@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
                 httpOnly: true,
                 secure: true,
                 sameSite: "None"
-            }).json({ message: "Logged in successfully" });
+            }).json({ success: true, redirectUrl: "/api/adminprofile", message: "Admin logged in successfully aman" });
 
     } catch (error) {
         console.error("Login Error:", error);

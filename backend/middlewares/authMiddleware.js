@@ -1,45 +1,63 @@
-
 import jwt from "jsonwebtoken";
-import axios from "axios";
 
-export const authenticateUser = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
     let token = req.cookies.accessToken || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-        return res.alert("❌ Access Denied: No token provided")
-        .redirect("http://localhost:5000/users/login"); 
+        return res.status(400).json({ msg: "❌ Access Denied: No token provided" });
     }
 
     try {
         // Verify the token
+        console.log("🔹 Checking token...");
+        console.log("Token:", token);
+        console.log("JWT Secret:", process.env.JWT_SECRET);
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("✅ Decoded Token:", decoded);
+
         req.user = decoded;
         next();
     } catch (error) {
         if (error.name === "TokenExpiredError") {
             try {
-                // 🔄 Automatically request a new access token
-                const refreshResponse = await axios.post(
-                    "http://localhost:5000/api/refresh-token", 
-                    {}, 
-                    { headers: { Cookie: req.headers.cookie }, withCredentials: true }
-                );
+                console.log("🔄 Token expired. Requesting new access token...");
 
-                // Set the new access token in the request
-                req.cookies.accessToken = refreshResponse.data.accessToken;
-                req.headers.authorization = `Bearer ${refreshResponse.data.accessToken}`;
+                // Request a new access token using fetch
+                const refreshResponse = await fetch("http://localhost:5000/api/refresh-token", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Cookie: req.headers.cookie // Send cookies for refresh token
+                    },
+                    credentials: "include" // Ensures cookies are sent
+                });
+
+                const data = await refreshResponse.json();
+
+                if (!refreshResponse.ok) {
+                    throw new Error(data.msg || "Failed to refresh token");
+                }
+
+                console.log("✅ New Access Token Received:", data.accessToken);
+
+                // Update the token in request headers
+                req.cookies.accessToken = data.accessToken;
+                req.headers.authorization = `Bearer ${data.accessToken}`;
 
                 // Verify the new token
-                const decoded = jwt.verify(refreshResponse.data.accessToken, process.env.JWT_SECRET);
+                const decoded = jwt.verify(data.accessToken, process.env.JWT_SECRET);
                 req.user = decoded;
                 next();
             } catch (refreshError) {
-                return res.alert("❌ Refresh Token Expired. Please login again.")
-                .redirect("http://localhost:5000/users/login"); 
+                console.error("🚨 Refresh Token Error:", refreshError);
+                return res.status(401).json({ msg: "❌ Refresh Token Expired. Please login again." });
             }
         } else {
-             return res.alert("❌ Invalid Token")
-            .redirect("http://localhost:5000/users/login"); 
+            console.error("🚨 Invalid Token Error:", error);
+            return res.status(401).json({ msg: "❌ Invalid Token" });
         }
     }
 };
+
+export { authenticateUser };

@@ -33,6 +33,15 @@
         </div>
     </div>
 <script>
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", function () {
+        this.classList.add("clicked"); // Change color on click
+        
+        setTimeout(() => {
+            this.classList.remove("clicked"); // Revert after 1 sec
+        }, 1000);
+    });
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("signupForm");

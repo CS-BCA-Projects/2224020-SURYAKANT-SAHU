@@ -78,10 +78,8 @@
             });
 
             const result = await response.json();
-            setTimeout(() => {
-                window.location.href = "/userprofile";
-            }, 1000);
-            alert(result.message); // Show success/error message
+            alert(result.message)
+            window.location.href = result.redirectUrl;
         });
     </script>
 </body>

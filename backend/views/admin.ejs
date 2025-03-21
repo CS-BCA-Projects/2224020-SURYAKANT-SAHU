@@ -5,75 +5,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../public/css/admin.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
     <div class="sidebar">
         <div class="profile">
-            <img src="profile.jpg" alt="Admin Profile">
-            <h3>Must University</h3>
-            <p>Esraa.Mamdouh@gmail.com</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEg09MmHvC-78aaRxyd52HabsZqI1-u8R6-w&s" alt="Admin Profile">
+            <h3><%= user.FullName %></h3>
+            <p><%= user.Email %></p>
         </div>
         <nav>
             <ul>
-                <li class="active">Home</li>
-                <li>Donors</li>
-                <li>Campaign</li>
+                <li><a href="#donor_container">Donors</a></li>
+                <li><a href="" id="logout_button">Logout</a></li>
             </ul>
         </nav>
     </div>
-    <div class="main-content">
+
+    <div class="main-content" id="donor_container">
         <header>
             <h2>Dashboard</h2>
         </header>
+
         <div class="cards">
-            <div class="card red">Donors <span>4</span></div>
-            <div class="card blue">Campaigns <span>3</span></div>
-            <div class="card green">New Comments <span>36</span></div>
-            <div class="card yellow">New Visitors <span>87</span></div>
+
         </div>
+
         <section class="donation-info">
             <h3>Current Blood Donation Info</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Task</th>
-                        <th>Status</th>
-                        <th>Admin</th>
-                        <th>Progress</th>
+                        <th>Name</th>
+                        <th>Blood Group</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>ContactNo</th>
+                        <th>Profession</th>
                     </tr>
                 </thead>
+              
                 <tbody>
-                    <tr>
-                        <td>Wadah</td>
-                        <td class="status pending">Pending</td>
-                        <td>Esraa Mamdouh</td>
-                        <td class="progress green"></td>
-                    </tr>
-                    <tr>
-                        <td>Fatih Mohsen</td>
-                        <td class="status pending">Pending</td>
-                        <td>Esraa Mamdouh</td>
-                        <td class="progress blue"></td>
-                    </tr>
-                    <tr>
-                        <td>Disa Tourna</td>
-                        <td class="status pending">Pending</td>
-                        <td>Esraa Mamdouh</td>
-                        <td class="progress orange"></td>
-                    </tr>
-                    <tr>
-                        <td>Arwa Bahaa</td>
-                        <td class="status pending">Pending</td>
-                        <td>Esraa Mamdouh</td>
-                        <td class="progress yellow"></td>
-                    </tr>
+                    <% donors.forEach(donor => { %>
+                        <tr>
+                            <td><%= donor.First_Name %> <%= donor.Last_Name  %></td>
+                            <td class=""><%= donor.BloodGroup %></td>
+                            <td class=""><%= donor.Gender %></td>
+                            <td><%= donor.State %>,<%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
+                            <td > <%= donor.ContactNo %> </td>
+                            <td > <%= donor.Profession %> </td>
+                        </tr>
+                    <% }); %>
                 </tbody>
             </table>
         </section>
     </div>
+
     <script>
+          document.getElementById("logout_button").addEventListener("click", async () => {
+    try {
+        const response = await fetch("http://localhost:5000/admin/logout", {
+            method: "POST",
+            credentials: "include" // ✅ Important for cookies
+        });
+
+        const data = await response.json(); // ✅ Parse JSON response
+
+        if (response.ok) {
+            alert(data.msg); // ✅ Properly alert message
+            window.location.href = "/admin/login"; // Redirect to login after logout
+        } else {
+            alert(`Error: ${data.error}`);
+        }
+    } catch (error) {
+        alert("Logout failed. Please try again.");
+        console.error("Logout error:", error);
+    }
+});
+
         /* script.js */
         document.querySelectorAll("nav ul li").forEach(item => {
             item.addEventListener("click", function () {

@@ -77,7 +77,9 @@ button {
 button:hover {
     background-color: #ff4c3b;
 }
-
+button.clicked {
+    background-color: green !important; /* Red when clicked */
+}
 .social-login a {
     margin: 0 10px;
     color: #007bff;

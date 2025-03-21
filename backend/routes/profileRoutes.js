@@ -1,6 +1,7 @@
 import express from "express";
-import { authenticateUser } from "../middleware/authMiddleware.js";
+import { authenticateUser } from "../middlewares/authMiddleware.js";
 import Donor from "../models/user_signup.js";
+import Donorregister from "../models/donorregisterform.js"; // Import Donorregister model
 
 const router = express.Router();
 
@@ -8,14 +9,21 @@ const router = express.Router();
 router.get("/profile", authenticateUser, async (req, res) => {
     try {
         // Fetch user data from the database using JWT user ID
-        const donor = await Donor.findById(req.user.id).select("-Password,-refreshToken"); // Exclude password
-
+        const donor = await Donor.findById(req.user.userId).select("-Password"); // Exclude password
+        
         if (!donor) {
             return res.status(404).json({ message: "❌ User not found" });
         }
+        
+        // Fetch donor's additional details from Donorregister
+        const donorDetails = await Donorregister.findOne({userId: req.user.userId });
+        
+        if (!donorDetails) {
+            return res.render("userprofile", { user: donor, donorDetails: null }); // If no additional details found
+        }
 
         // Render EJS page with user data
-        res.render("userprofile", { user: donor });
+        res.render("userprofile", { user: donor,userinfo:donorDetails});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "❌ Server error" });

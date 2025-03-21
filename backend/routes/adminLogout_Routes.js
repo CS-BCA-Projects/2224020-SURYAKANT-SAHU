@@ -1,5 +1,5 @@
 import express from 'express';
-import Donor from '../models/user_signup.js';
+import Admin from '../models/admin_signup.js';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.post("/logout", async (req, res) => {
         }
 
         // Remove refresh token from the database
-        await Donor.findOneAndUpdate({ refreshToken }, { refreshToken: null });
+        await Admin.findOneAndUpdate({ refreshToken }, { refreshToken: null });
 
         // Clear the cookie and send success response
         res.clearCookie("accessToken", { httpOnly: true, secure: true, sameSite: "strict" });
