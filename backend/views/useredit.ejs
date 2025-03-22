@@ -9,38 +9,46 @@
 <body>
     <div class="container">
         <h2>Edit Profile</h2>
-        <img id="profile-pic" src="https://via.placeholder.com/100" alt="Profile Image" class="profile-img">
-        <input type="file" id="upload-photo" accept="image/*">
-        <input type="text" id="name" placeholder="Enter your name">
-        <input type="email" id="email" placeholder="Enter your email">
-        <label for="bloodGroup">Select Blood Group:-</label>
-        <select id="bloodGroup" required style="height: 30px;">
-            <option value="">Select Blood Group</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-        </select>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Enter your username" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="contact">Contact No:</label>
+        <input type="text" id="contact" placeholder="Enter your contact number" required>
+
+        <label for="profession">Profession:</label>
+        <input type="text" id="profession" placeholder="Enter your profession" required>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" placeholder="Enter your weight (kg)" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" placeholder="Enter your age" required>
+
         <button onclick="saveProfile()">Save Changes</button>
     </div>
 
     <script>
         function saveProfile() {
-            const name = document.getElementById("name").value;
+            const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
-            
-            if (!name || !email) {
+            const contact = document.getElementById("contact").value;
+            const profession = document.getElementById("profession").value;
+            const weight = document.getElementById("weight").value;
+            const age = document.getElementById("age").value;
+            const bloodGroup = document.getElementById("bloodGroup").value;
+
+            if (!username || !email || !contact || !profession || !weight || !age || !bloodGroup) {
                 alert("Please fill out all fields.");
                 return;
             }
-            
+
             alert("Profile updated successfully!");
         }
-        
+
         document.getElementById("upload-photo").addEventListener("change", function(event) {
             const reader = new FileReader();
             reader.onload = function() {

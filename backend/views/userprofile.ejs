@@ -5,77 +5,161 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= user.username %>'s Dashboard</title>
     <link rel="stylesheet" href="/css/userprofile.css">
-
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h2>Bloodlink.com </h2>
+        <h2>Bloodlink.com</h2>
         <ul>
             <li><a href="/donor/donorform">Donor Registration Form</a></li>
             <li><a href="#profile">Profile</a></li>
-            <li><a href="" id="logout_button">Logout</a></li>
+            <li><a href="#" id="logout_button">Logout</a></li>
         </ul>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <section id="profile" class="card">
             <h2>Profile</h2>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyCixyM2urliFC1w0DyNMJpBRMOXFizr3FR8aRIFfcDUGBzEaXcV6mt4gVWRqGAqqu4PI&usqp=CAU" alt="Profile Image" class="profile-image">
-            <p style="display: flex;align-items: center;justify-content: center;flex-direction: column ;">
-                 <span  id="username" style=" font-size: 27px;font-weight: 700;"> <%= user.username %></span>
-                 <span  id="useremail" style=" font-size: 27px;font-weight: 700;"> <%= user.email %></span>
-            </p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyCixyM2urliFC1w0DyNMJpBRMOXFizr3FR8aRIFfcDUGBzEaXcV6mt4gVWRqGAqqu4PI&usqp=CAU" 
+                 alt="Profile Image" class="profile-image">
+            
+            <p style="display: flex;align-items: center;justify-content: center;flex-direction: column;">
+                <span id="username" style="font-size: 27px; font-weight: 700;"> <%= user.username %></span>
+                <span id="useremail" style="font-size: 27px; font-weight: 700; margin-top: 15px;"> <%= user.email %></span>
+           </p>
+
             <div class="profile-info">
-                <h2 style="text-align: center;">User Detailes</h2>
                 <div class="info_container">
                     <% if (userinfo) { %>
-                        <p><strong>Name:</strong> <span id="name"><%= userinfo.First_Name %> <%= userinfo.Last_Name %></span></p>
-                        <p><strong>Blood Group:</strong> <span id="blood-group"><%= userinfo.BloodGroup %></span></p>
-                        <p><strong>Email:</strong> <span id="email"><%= userinfo.Email %></span></p>
-                        <p><strong>Contact No:</strong> <span id="phone"><%= userinfo.ContactNo %></span></p>
-                        <p><strong>Date of Birth:</strong> <span id="birth"><%= userinfo.DOB %></span></p>
-                        <p><strong>Age:</strong> <span id="age"><%= userinfo.Age %></span></p>
-                        <p><strong>Gender:</strong> <span id="gender"><%= userinfo.Gender %></span></p>
-                        <p><strong>Address:</strong> 
-                            <span id="address"><%= userinfo.State %>, <%= userinfo.District %>, 
-                            <%= userinfo.Block %>, <%= userinfo.Pincode %></span>
+                        <p><strong>Name:</strong> <span class="view-mode"><%= userinfo.First_Name %> <%= userinfo.Last_Name %></span>
+                            <input type="text" class="edit-mode" value="<%= userinfo.First_Name %> <%= userinfo.Last_Name %>" style="display: none;">
                         </p>
-                        <p><strong>Weight:</strong> <span id="weight"><%= userinfo.Weight %></span></p>   
-                        <p><strong>Profession:</strong> <span id="profession"><%= userinfo.Profession %></span></p>   
+
+                        <p><strong>Blood Group:</strong> <span class="view-mode"><%= userinfo.BloodGroup %></span>
+                            <input type="text" class="edit-mode" value="<%= userinfo.BloodGroup %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Email:</strong> <span class="view-mode"><%= userinfo.Email || 'Not Provided' %></span>
+                            <input type="email" class="edit-mode" value="<%= userinfo.Email || '' %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Contact No:</strong> <span class="view-mode"><%= userinfo.ContactNo %></span>
+                            <input type="text" class="edit-mode" value="<%= userinfo.ContactNo %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Date of Birth:</strong> <span class="view-mode"><%= userinfo.DOB %></span>
+                            <input type="date" class="edit-mode" value="<%= userinfo.DOB %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Age:</strong> <span class="view-mode"><%= userinfo.Age %></span>
+                            <input type="number" class="edit-mode" value="<%= userinfo.Age %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Gender:</strong> <span class="view-mode"><%= userinfo.Gender %></span>
+                            <select class="edit-mode" style="display: none;">
+                                <option value="Male" <%= userinfo.Gender === "Male" ? "selected" : "" %>>Male</option>
+                                <option value="Female" <%= userinfo.Gender === "Female" ? "selected" : "" %>>Female</option>
+                                <option value="Other" <%= userinfo.Gender === "Other" ? "selected" : "" %>>Other</option>
+                            </select>
+                        </p>
+
+                        <p><strong>Weight:</strong> <span class="view-mode"><%= userinfo.Weight || 'Not Provided' %></span>
+                            <input type="number" class="edit-mode" value="<%= userinfo.Weight || '' %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Profession:</strong> <span class="view-mode"><%= userinfo.Profession || 'Not Provided' %></span>
+                            <input type="text" class="edit-mode" value="<%= userinfo.Profession || '' %>" style="display: none;">
+                        </p>
+
+                        <p><strong>Address:</strong> <span class="view-mode"><%= userinfo.State %>, <%= userinfo.District %>, <%= userinfo.Block %>, <%= userinfo.Pincode %></span>
+                            <input type="text" class="edit-mode" value="<%= userinfo.State %>, <%= userinfo.District %>, <%= userinfo.Block %>, <%= userinfo.Pincode %>" style="display: none;">
+                        </p>
+
+                        <button id="edit_button">Edit Profile</button>
+                        <button id="save_button" style="display: none;">Save Changes</button>
+
                     <% } else { %>
-                        <p style="text-align: center;">Your details will be visible after registering in the <a href="/donor/donorform" style="list-style: none;" >Donor Registration Form</a>.</p>
+                        <p style="text-align: center;">Your details will be visible after registering in the 
+                        <a href="/donor/donorform">Donor Registration Form</a>.</p>
                     <% } %>
                 </div>
-                
-
             </div>
         </section>
     </div>
-<script>
-      document.getElementById("logout_button").addEventListener("click", async () => {
-    try {
-        const response = await fetch("http://localhost:5000/api/logout", {
-            method: "POST",
-            credentials: "include" // ✅ Important for cookies
+
+    <script>
+        document.getElementById("logout_button").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/logout", {
+                    method: "POST",
+                    credentials: "include"
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.msg);
+                    window.location.href = "/users/login";
+                } else {
+                    alert(`Error: ${data.error}`);
+                }
+            } catch (error) {
+                alert("Logout failed. Please try again.");
+                console.error("Logout error:", error);
+            }
         });
 
-        const data = await response.json(); // ✅ Parse JSON response
+        const editButton = document.getElementById("edit_button");
+        const saveButton = document.getElementById("save_button");
+        const viewElements = document.querySelectorAll(".view-mode");
+        const editElements = document.querySelectorAll(".edit-mode");
 
+        editButton.addEventListener("click", () => {
+            viewElements.forEach(el => el.style.display = "none");
+            editElements.forEach(el => el.style.display = "inline-block");
+            editButton.style.display = "none";
+            saveButton.style.display = "inline-block";
+        });
+
+        saveButton.addEventListener("click", async () => {
+    const editInputs = document.querySelectorAll(".edit-mode");
+
+    const updatedUser = {
+        name: editInputs[0]?.value || "",
+        bloodGroup: editInputs[1]?.value || "",
+        email: editInputs[2]?.value || "",
+        phone: editInputs[3]?.value || "",
+        birth: editInputs[4]?.value || "",
+        age: editInputs[5]?.value || "",
+        gender: editInputs[6]?.value || "",
+        weight: editInputs[7]?.value || "",
+        profession: editInputs[8]?.value || "",
+        address: editInputs[9]?.value || ""
+    };
+
+    console.log(updatedUser);
+
+    try {
+        const response = await fetch("/api/updateprofile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedUser)
+        });
+         console.log(response.ok);
+         
         if (response.ok) {
-            alert(data.msg); // ✅ Properly alert message
-            window.location.href = "/users/login"; // Redirect to login after logout
+            alert("Profile updated successfully!");
+            location.reload();
         } else {
-            alert(`Error: ${data.error}`);
+            alert("Error updating profile.");
         }
     } catch (error) {
-        alert("Logout failed. Please try again.");
-        console.error("Logout error:", error);
+        console.error("Update error:", error);
     }
 });
 
-</script>
+    </script>
 </body>
 </html>

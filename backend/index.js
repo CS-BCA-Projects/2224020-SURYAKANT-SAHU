@@ -24,6 +24,7 @@ import profile from './routes/profileRoutes.js';
 import logout from './routes/userlogout.js';
 import adminprofile from './routes/adminProfile_Routes.js';
 import adminlogout from './routes/adminLogout_Routes.js';
+import updateprofile from './routes/updateProfile_routes.js';
 
 // Load environment variables
 dotenv.config();
@@ -71,6 +72,7 @@ app.use("/api", refreshtoken);
 app.use("/api", profile);
 app.use("/api", logout);
 app.use("/api", adminprofile);
+app.use("/api", updateprofile);
 
 
 // Default Route (EJS Test)
@@ -100,6 +102,9 @@ app.get("/admin/signup", (req, res) => {
 });
 app.get("/admin/login", (req, res) => {
     res.render("adminlogin");
+});
+app.get("/donor/edit", (req, res) => {
+    res.render("useredit");
 });
 
 

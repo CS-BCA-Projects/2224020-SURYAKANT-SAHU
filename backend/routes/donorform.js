@@ -83,6 +83,7 @@ router.post("/donorform", authenticateUser, async (req, res) => {
     await sendWelcomeEmail(Email);
 
     res.status(201).json({ msg: "Registration successful" });
+    
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Server error. Please try again later." });

@@ -80,33 +80,26 @@ nav ul li:hover {
 }
 #Name{
     background: #F93827;
-    display: flex;
-    justify-content: center;
+
 }
 #BloodGroup{
     background: #3E7B27;
-    display: flex;
-    justify-content: center;
+
 }
 #Gender{
     background: #FF9D23;
-    display: flex;
-    justify-content: center;
+
 }
 #Address{
     background: #690B22;
-    display: flex;
-    justify-content: center;
+
 }
 #ContactNo{
     background: #003092;
-    display: flex;
-    justify-content: center;
+
 }
 #Profession{
     background: #034C53;
-    display: flex;
-    justify-content: center;
 }
 
 
