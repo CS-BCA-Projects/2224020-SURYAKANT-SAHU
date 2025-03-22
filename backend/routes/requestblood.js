@@ -29,7 +29,7 @@ router.post("/request_blood", async (req, res) => {
         from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
         to: donorEmail,
         subject: "Blood Donation Request",
-        text: `Dear Donor,\n\n${name} is requesting for a blood donation.\n\nContact: ${contact}\nEmail : ${email}`
+        text: `Dear Donor,\n\n${name} is requesting for a blood donation.\n\nContact: ${contact}\n\nEmail : ${email}`
     };
 
     try {

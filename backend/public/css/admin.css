@@ -5,14 +5,17 @@ body {
     margin: 0;
 }
 #logout_button{
-    list-style: none;
-    text-decoration: none;
     color: white;
+    position: absolute;
+    background: #650303;
+    right: 9px;
+    cursor: grab;
+    top: 15px;
     font-size: 22px;
 }
 .sidebar {
     width: 250px;
-    background: #d32f2f;
+    background: #780606;
     color: white;
     padding: 20px;
     height: 100vh;
@@ -20,9 +23,16 @@ body {
 .profile {
     text-align: center;
 }
+.profile p{
+    font-size: 19px;
+}
 .profile img {
-    width: 80px;
+    width: 125px;
     border-radius: 50%;
+}
+h3{
+    font-size: 25px;
+
 }
 nav ul {
     list-style: none;
@@ -38,12 +48,14 @@ ul li a{
     text-decoration: none;
     list-style: none;
 }
-nav ul li.active, nav ul li:hover {
+nav ul li:hover {
     background: #b71c1c;
 }
 .main-content {
     flex: 1;
     padding: 20px;
+    background: #a0a0a0d6;
+    color: #000000;
 }
 .cards {
     display: flex;
@@ -56,10 +68,6 @@ nav ul li.active, nav ul li:hover {
     text-align: center;
     flex: 1;
 }
-.red { background: #e57373; }
-.blue { background: #64b5f6; }
-.green { background: #81c784; }
-.yellow { background: #ffb74d; }
 .donation-info table {
     width: 100%;
     margin-top: 20px;
@@ -67,18 +75,39 @@ nav ul li.active, nav ul li:hover {
 }
 .donation-info th, .donation-info td {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #030303;
     text-align: left;
 }
-.status.pending { color: orange; }
-.progress {
-    height: 10px;
-    width: 100%;
-    background: grey;
+#Name{
+    background: #F93827;
+    display: flex;
+    justify-content: center;
 }
-.progress.green { background: green; }
-.progress.blue { background: blue; }
-.progress.orange { background: orange; }
-.progress.yellow { background: yellow; }
+#BloodGroup{
+    background: #3E7B27;
+    display: flex;
+    justify-content: center;
+}
+#Gender{
+    background: #FF9D23;
+    display: flex;
+    justify-content: center;
+}
+#Address{
+    background: #690B22;
+    display: flex;
+    justify-content: center;
+}
+#ContactNo{
+    background: #003092;
+    display: flex;
+    justify-content: center;
+}
+#Profession{
+    background: #034C53;
+    display: flex;
+    justify-content: center;
+}
+
 
 

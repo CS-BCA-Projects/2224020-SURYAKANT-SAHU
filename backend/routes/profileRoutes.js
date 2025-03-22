@@ -19,7 +19,7 @@ router.get("/profile", authenticateUser, async (req, res) => {
         const donorDetails = await Donorregister.findOne({userId: req.user.userId });
         
         if (!donorDetails) {
-            return res.render("userprofile", { user: donor, donorDetails: null }); // If no additional details found
+            return res.render("userprofile", { user: donor, userinfo: "" }); // If no additional details found
         }
 
         // Render EJS page with user data

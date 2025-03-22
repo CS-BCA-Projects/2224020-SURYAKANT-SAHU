@@ -15,17 +15,13 @@
             <h3><%= user.FullName %></h3>
             <p><%= user.Email %></p>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#donor_container">Donors</a></li>
-                <li><a href="" id="logout_button">Logout</a></li>
-            </ul>
-        </nav>
+
     </div>
 
     <div class="main-content" id="donor_container">
         <header>
             <h2>Dashboard</h2>
+            <button id="logout_button">Logout</button>
         </header>
 
         <div class="cards">
@@ -36,13 +32,13 @@
             <h3>Current Blood Donation Info</h3>
             <table>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Blood Group</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>ContactNo</th>
-                        <th>Profession</th>
+                    <tr style="color: white;">
+                        <th id="Name">Name</th>
+                        <th id="BloodGroup">Blood Group</th>
+                        <th id="Gender">Gender</th>
+                        <th id="Address">Address</th>
+                        <th id="ContactNo">ContactNo</th>
+                        <th id="Profession">Profession</th>
                     </tr>
                 </thead>
               
@@ -50,8 +46,8 @@
                     <% donors.forEach(donor => { %>
                         <tr>
                             <td><%= donor.First_Name %> <%= donor.Last_Name  %></td>
-                            <td class=""><%= donor.BloodGroup %></td>
-                            <td class=""><%= donor.Gender %></td>
+                            <td ><%= donor.BloodGroup %></td>
+                            <td ><%= donor.Gender %></td>
                             <td><%= donor.State %>,<%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
                             <td > <%= donor.ContactNo %> </td>
                             <td > <%= donor.Profession %> </td>
@@ -84,13 +80,7 @@
     }
 });
 
-        /* script.js */
-        document.querySelectorAll("nav ul li").forEach(item => {
-            item.addEventListener("click", function () {
-                document.querySelector("nav ul li.active").classList.remove("active");
-                this.classList.add("active");
-            });
-        });
+    
     </script>
 </body>
 

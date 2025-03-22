@@ -4,103 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= user.username %>'s Dashboard</title>
-    
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #d32f2f;
-            color: white;
-            position: fixed;
-            padding-top: 20px;
-        }
-        .sidebar h2 {
-            text-align: center;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar ul li {
-            padding: 15px;
-            text-align: center;
-        }
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-        }
-        .sidebar ul li:hover {
-            background: #b71c1c;
-        }
-        .main-content {
-            margin-left: 260px;
-            padding: 20px;
-        }
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #b71c1c;
-        }
-        .profile-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            display: block;
-            margin: 10px auto;
-            border: 3px solid #d32f2f;
-        }
-        .profile-info {
-            font-size: 18px;
-        }
-        .logout_button{
-            cursor: grab;
-        }
-        .profile-info{
-            border: 2px solid black;
-        }
-        .info_container{
-            margin-left: 15px;
-        }
+    <link rel="stylesheet" href="/css/userprofile.css">
 
-    </style>
 </head>
 <body>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h2>Bloodlink.com</h2>
+        <h2>Bloodlink.com </h2>
         <ul>
             <li><a href="/donor/donorform">Donor Registration Form</a></li>
             <li><a href="#profile">Profile</a></li>
-            <li><a href="">Notification</a></li>
             <li><a href="" id="logout_button">Logout</a></li>
         </ul>
     </div>
@@ -110,26 +24,32 @@
         <section id="profile" class="card">
             <h2>Profile</h2>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyCixyM2urliFC1w0DyNMJpBRMOXFizr3FR8aRIFfcDUGBzEaXcV6mt4gVWRqGAqqu4PI&usqp=CAU" alt="Profile Image" class="profile-image">
-            <p> <span  id="username" style=" position: relative;
-                left: 47.5%;
-                bottom: 18px;
-                font-size: 27px;
-                font-weight: 700;"> <%= user.username %></span></p>
+            <p style="display: flex;align-items: center;justify-content: center;flex-direction: column ;">
+                 <span  id="username" style=" font-size: 27px;font-weight: 700;"> <%= user.username %></span>
+                 <span  id="useremail" style=" font-size: 27px;font-weight: 700;"> <%= user.email %></span>
+            </p>
             <div class="profile-info">
-
+                <h2 style="text-align: center;">User Detailes</h2>
                 <div class="info_container">
-                    <p><strong>Name:</strong> <span id="name"><%= userinfo.First_Name %> <%= userinfo.Last_Name %></span></p>
-                    <p><strong>Blood Group:</strong> <span id="blood-group"><%= userinfo.BloodGroup %></span></p>
-                    <p><strong>Email:</strong> <span id="email"><%= user.email %></span></p>
-                    <p><strong>ContactNo:</strong> <span id="phone"><%= userinfo.ContactNo %></span></p>
-                    <p><strong>Date of Birth:</strong> <span id="birth"><%= userinfo.DOB %></span></p>
-                    <p><strong>Age:</strong> <span id="age"><%= userinfo.Age %></span></p>
-                    <p><strong>Gender:</strong> <span id="gender"><%= userinfo.Gender %></span></p>
-                    <p><strong>Address:</strong> <span id="address"><%= userinfo.State %>,<%= userinfo.District %>,
-                        <%= userinfo.Block %>,<%= userinfo.Pincode %></span></p>
-                    <p><strong>Weight:</strong> <span id="weight"><%= userinfo.weight %></span></p>   
-                    <p><strong>Profession:</strong> <span id="profession"><%= userinfo.Profession %></span></p>   
+                    <% if (userinfo) { %>
+                        <p><strong>Name:</strong> <span id="name"><%= userinfo.First_Name %> <%= userinfo.Last_Name %></span></p>
+                        <p><strong>Blood Group:</strong> <span id="blood-group"><%= userinfo.BloodGroup %></span></p>
+                        <p><strong>Email:</strong> <span id="email"><%= userinfo.Email %></span></p>
+                        <p><strong>Contact No:</strong> <span id="phone"><%= userinfo.ContactNo %></span></p>
+                        <p><strong>Date of Birth:</strong> <span id="birth"><%= userinfo.DOB %></span></p>
+                        <p><strong>Age:</strong> <span id="age"><%= userinfo.Age %></span></p>
+                        <p><strong>Gender:</strong> <span id="gender"><%= userinfo.Gender %></span></p>
+                        <p><strong>Address:</strong> 
+                            <span id="address"><%= userinfo.State %>, <%= userinfo.District %>, 
+                            <%= userinfo.Block %>, <%= userinfo.Pincode %></span>
+                        </p>
+                        <p><strong>Weight:</strong> <span id="weight"><%= userinfo.Weight %></span></p>   
+                        <p><strong>Profession:</strong> <span id="profession"><%= userinfo.Profession %></span></p>   
+                    <% } else { %>
+                        <p style="text-align: center;">Your details will be visible after registering in the <a href="/donor/donorform" style="list-style: none;" >Donor Registration Form</a>.</p>
+                    <% } %>
                 </div>
+                
 
             </div>
         </section>
