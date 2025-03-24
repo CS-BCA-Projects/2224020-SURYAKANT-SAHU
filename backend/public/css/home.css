@@ -163,3 +163,154 @@ margin-top:35px ;
     text-decoration: none;
     font-size: 4vh;
 }
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+    #home, #about {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .section1-left, .section2-right {
+        width: 90%;
+    }
+
+    .section1-right img, .section2-left img {
+        width: 80%;
+    }
+
+    .feature_box {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: 20%;
+        padding: 10px 0;
+    }
+
+    #logo {
+        height: 60px;
+    }
+
+    nav ul {
+        padding: 0;
+        text-align: center;
+    }
+
+    nav ul li {
+        display: block;
+        padding: 10px;
+    }
+
+    #home-image, #about-image {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .home-scrol-bar, .about-scrol-bar {
+        height: auto;
+        overflow: visible;
+    }
+
+    #feature {
+        flex-direction: column;
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .feature_box {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .welcome {
+        font-size: 40px;
+    }
+
+    .section2-right h2 {
+        font-size: 30px;
+    }
+
+    nav ul li {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .feature_box {
+        width: 90%;
+    }
+    #feature {
+        margin-top: 165%;
+    }
+    footer {
+        font-size: 14px;
+    }
+
+    #home{
+        margin-top: 45%;
+    }
+}
+@media screen and (max-width: 1024px) {
+    #feature {
+        flex-wrap: wrap;
+        padding: 20px 0;
+        margin-top: 77%;
+    }
+
+    .feature_box {
+        width: 45%;
+        margin-bottom: 15px;
+    }
+    #home-image{
+        width: 80vw;
+        margin-top: 0%;
+    }
+    #about-image{
+        width: 65vw;
+    }
+}
+@media screen and (max-width: 820px) {
+    #feature{
+        margin-top: 64%;
+    }
+
+@media screen and (max-width: 768px) {
+    #feature {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 100%;
+    }
+
+    .feature_box {
+        width: 53%;
+        margin-bottom: 15px;
+    }
+    #home{
+        margin-top: 8%;
+    }
+    nav ul{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+}
+@media screen and (max-width: 768px) {
+    #feature {
+        flex-direction: column; /* Stack them vertically on small screens */
+        align-items: center; /* Center-align items */
+        height: auto; /* Remove fixed height */
+    }
+
+    .feature_box {
+        width: 80%; /* Make them take more space */
+        margin-bottom: 15px; /* Add spacing between them */
+    }
+}

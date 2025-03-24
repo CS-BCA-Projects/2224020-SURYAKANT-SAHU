@@ -2,20 +2,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .container {
     display: flex;
-    width: 800px;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 7px 10px rgba(0, 0, 0, 0.5);
@@ -23,20 +26,22 @@ body {
 
 .form-section {
     background-color: white;
-    padding: 40px;
-    width: 50%;
+    padding: 30px;
+    width: 100%;
+    order: 2;
 }
 
 .info-section {
     background-color: #780606;
     color: white;
-    padding: 40px;
-    width: 50%;
+    padding: 30px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    font-size: 25px;
+    font-size: 1.5rem;
+    order: 1;
 }
 
 h2 {
@@ -48,11 +53,11 @@ h2 {
 
 input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 23px;
-    margin-top: 5px;
+    padding: 12px;
+    margin: 8px 0 15px;
     border: 1px solid #b93c3c;
     border-radius: 5px;
+    font-size: 16px;
 }
 
 .forgot-password {
@@ -61,35 +66,66 @@ input {
     text-align: right;
     color: #007bff;
     text-decoration: none;
+    font-size: 14px;
 }
 
 button {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 12px;
     border: none;
     border-radius: 5px;
     color: white;
     background-color: #780606;
     cursor: pointer;
-    position: relative;
-    left: 25%;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 button:hover {
     background-color: #ff4c3b;
 }
+
 button.clicked {
-    background-color: green !important; /* Red when clicked */
+    background-color: green !important;
 }
-.social-login a {
-    margin: 0 10px;
-    color: #007bff;
-    text-decoration: none;
-}
-label{
-    margin-bottom: 10px;
+
+label {
+    margin-bottom: 5px;
     color: #b42020;
+    font-weight: bold;
+    display: block;
 }
-.login-link{
-    margin-top: 5%;
-    margin-left: 10%;
+
+/* Tablet and Desktop Styles */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+    }
+
+    .form-section {
+        width: 50%;
+        order: 1;
+        padding: 40px;
+    }
+
+    .info-section {
+        width: 50%;
+        order: 2;
+        padding: 40px;
+        font-size: 1.8rem;
+    }
+
+    button {
+        width: 50%;
+        margin-left: 25%;
+    }
+}
+
+/* Large Desktop Styles */
+@media (min-width: 992px) {
+    .info-section {
+        font-size: 2rem;
+    }
 }

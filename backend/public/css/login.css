@@ -1,21 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    padding: 20px;
 }
+
 .container {
     display: flex;
-    width: 800px;
-    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     border-top-left-radius: 100px;
     border-bottom-right-radius: 100px;
     overflow: hidden;
 }
+
+/* Left panel styling */
 .left-panel {
     background-color: #780606;
     color: white;
@@ -25,42 +37,53 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
+
+/* Right panel styling */
 .right-panel {
     background-color: white;
     padding: 40px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-.create{
-    position: relative;
-    left: 33%;
-}
+
+/* Form input styling */
 .input-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
 }
+
 label {
     font-size: 14px;
     color: #e63946;
     margin-bottom: 5px;
 }
+
 input {
     padding: 10px;
     border: 1px solid #e63946;
     border-radius: 5px;
     font-size: 14px;
 }
+
+/* Password field & eye icon */
 .password-field {
     position: relative;
 }
+
 .password-field i {
     position: absolute;
     right: 10px;
-    top: 70%;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
 }
+
+/* Log In Button */
 .btn {
     background-color: black;
     color: white;
@@ -68,40 +91,114 @@ input {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
     width: 100%;
     font-size: 16px;
+    transition: 0.3s;
 }
+
 .btn:hover {
     background-color: #333;
 }
-.social-login {
-    text-align: center;
-    margin: 20px 0;
+
+/* Forgot Password Link */
+.forget {
+    text-align: right;
+    margin-top: 5px;
 }
-.social-icons i {
-    font-size: 24px;
-    margin: 0 10px;
-    cursor: pointer;
-}
-.login-link {
-    text-align: center;
-}
-.login-link a {
+
+.forget a {
     color: #e63946;
     text-decoration: none;
 }
-.login-link a:hover {
+
+.forget a:hover {
     text-decoration: underline;
 }
-h2{
-    margin-left: 35%;
+
+/* Create Account Link */
+.create {
+    text-align: center;
+    margin-top: 15px;
 }
-.center{
-    margin-left: 32%;
+
+.create a {
+    color: #e63946;
+    text-decoration: none;
 }
-.forget{
-    padding: 10px;
-    position: relative;
-    left: 46%;
+
+.create a:hover {
+    text-decoration: underline;
+}
+
+/* Center headings */
+h2 {
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        border-radius: 20px;
+    }
+
+    .left-panel {
+        width: 100%;
+        padding: 20px;
+        border-top-left-radius: 20px;
+        border-bottom-right-radius: 0;
+    }
+
+    .right-panel {
+        width: 100%;
+        padding: 20px;
+    }
+
+    input,
+    .btn {
+        font-size: 16px;
+    }
+
+    .forget {
+        text-align: center;
+    }
+
+    h2,
+    .center {
+        margin-left: 0;
+        text-align: center;
+    }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .left-panel img {
+        width: 80%;
+        height: auto;
+    }
+
+    .right-panel {
+        padding: 15px;
+    }
+
+    input,
+    .btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .forget,
+    .create {
+        text-align: center;
+    }
 }
