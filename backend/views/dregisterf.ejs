@@ -115,7 +115,7 @@
             }
 
             try {
-                const response = await fetch("http://localhost:5000/donor/donorform", {
+                const response = await fetch("/donor/donorform", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
