@@ -2,10 +2,11 @@
   "name": "final-project",
   "version": "1.0.0",
   "description": "this is a blood donation management system",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon -r dotenv/config  backend/index.js"
+    "dev": "nodemon -r dotenv/config  backend/index.js",
+    "start": "node backend/app.js"
   },
   "keywords": [
     "js",

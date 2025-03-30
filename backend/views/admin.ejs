@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -15,42 +17,41 @@
             <h3><%= user.FullName %></h3>
             <p><%= user.Email %></p>
         </div>
-
     </div>
 
     <div class="main-content" id="donor_container">
         <header>
             <h2>Dashboard</h2>
-            <button id="logout_button">Logout</button>
+
+            <button id="logout_button">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         </header>
 
-        <div class="cards">
-
-        </div>
+        <div class="cards"></div>
 
         <section class="donation-info">
             <h3>Current Blood Donation Info</h3>
             <table>
                 <thead>
                     <tr style="color: white;">
-                        <th id="Name">Name</th>
-                        <th id="BloodGroup">Blood Group</th>
-                        <th id="Gender">Gender</th>
-                        <th id="Address">Address</th>
-                        <th id="ContactNo">ContactNo</th>
-                        <th id="Profession">Profession</th>
+                        <th>Name</th>
+                        <th>Blood Group</th>
+                        <th>Gender</th>
+                        <th>Location</th>
+                        <th>Contact</th>
+                        <th>Profession</th>
                     </tr>
                 </thead>
-              
                 <tbody>
                     <% donors.forEach(donor => { %>
                         <tr>
                             <td><%= donor.First_Name %> <%= donor.Last_Name  %></td>
-                            <td ><%= donor.BloodGroup %></td>
-                            <td ><%= donor.Gender %></td>
-                            <td><%= donor.State %>,<%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
-                            <td > <%= donor.ContactNo %> </td>
-                            <td > <%= donor.Profession %> </td>
+                            <td><%= donor.BloodGroup %></td>
+                            <td><%= donor.Gender %></td>
+                            <td><%= donor.State %>, <%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
+                            <td><%= donor.ContactNo %></td>
+                            <td><%= donor.Profession %></td>
                         </tr>
                     <% }); %>
                 </tbody>
@@ -58,30 +59,32 @@
         </section>
     </div>
 
+    <!-- Support Request Modal -->
+
     <script>
-          document.getElementById("logout_button").addEventListener("click", async () => {
-    try {
-        const response = await fetch("http://localhost:5000/admin/logout", {
-            method: "POST",
-            credentials: "include" // ✅ Important for cookies
+        document.getElementById("logout_button").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/admin/logout", {
+                    method: "POST",
+                    credentials: "include"
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.msg);
+                    window.location.href = "/admin/login";
+                } else {
+                    alert(`Error: ${data.error}`);
+                }
+            } catch (error) {
+                alert("Logout failed. Please try again.");
+                console.error("Logout error:", error);
+            }
         });
 
-        const data = await response.json(); // ✅ Parse JSON response
-
-        if (response.ok) {
-            alert(data.msg); // ✅ Properly alert message
-            window.location.href = "/admin/login"; // Redirect to login after logout
-        } else {
-            alert(`Error: ${data.error}`);
-        }
-    } catch (error) {
-        alert("Logout failed. Please try again.");
-        console.error("Logout error:", error);
-    }
-});
-
-    
     </script>
+
+
 </body>
 
 </html>
