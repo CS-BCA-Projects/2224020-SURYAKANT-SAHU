@@ -34,7 +34,7 @@ router.post("/forgot-password", async (req, res) => {
         await admin.save();
 
         // Send Reset Email
-        const resetLink = `http://localhost:${process.env.PORT || 5500}/reset-password/?token=${resetToken}&userType=admin`;
+        const resetLink = `/reset-password/?token=${resetToken}&userType=admin`;
 
         await transporter.sendMail({
             from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
