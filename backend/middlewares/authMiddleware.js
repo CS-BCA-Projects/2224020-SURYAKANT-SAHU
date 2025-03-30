@@ -24,7 +24,7 @@ const authenticateUser = async (req, res, next) => {
                 console.log("🔄 Token expired. Requesting new access token...");
 
                 // Request a new access token using fetch
-                const refreshResponse = await fetch("http://localhost:5000/api/refresh-token", {
+                const refreshResponse = await fetch("/api/refresh-token", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
