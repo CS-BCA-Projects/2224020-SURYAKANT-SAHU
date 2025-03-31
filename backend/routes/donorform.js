@@ -8,7 +8,7 @@ const router = express.Router(); // FIXED: use express.Router()
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 25, // Use 587 instead of 465
+  port: 587, // Use 587 instead of 465
   secure: false, // false for STARTTLS (recommended)
   auth: {
     user: process.env.EMAIL_USER,
