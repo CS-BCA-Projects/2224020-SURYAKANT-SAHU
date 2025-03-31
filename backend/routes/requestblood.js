@@ -31,6 +31,8 @@ router.post("/request_blood", async (req, res) => {
         subject: "Blood Donation Request",
         text: `Dear Donor,\n\n${name} is requesting for a blood donation.\n\nContact: ${contact}\n\nEmail : ${email}`
     };
+    console.log("Using Email:", process.env.EMAIL_USER);
+console.log("Using Password:", process.env.EMAIL_PASS ? "Present" : "Missing");
 
     try {
         await transporter.sendMail(mailOptions);
