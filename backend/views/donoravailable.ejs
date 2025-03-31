@@ -159,7 +159,7 @@
             let query = `?State=${encodeURIComponent(State)}&District=${encodeURIComponent(District)}&BloodGroup=${encodeURIComponent(BloodGroup)}`;
 
             try {
-                const response = await fetch(`http://localhost:5000/donor/donors${query}`);
+                const response = await fetch(`/donor/donors${query}`);
                 const donors = await response.json();
                 updateDonorTable(donors);
             } catch (error) {
