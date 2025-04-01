@@ -6,7 +6,7 @@ const router = express.Router(); // Fix: Use Router
 // Configure email transporter
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,, // Use 587 instead of 465
+  port: process.env.SMTP_PORT, // Use 587 instead of 465
   secure: true, // false for STARTTLS (recommended)
     secure: false, // false for STARTTLS (recommended)
     auth: {
