@@ -38,12 +38,12 @@ router.post("/login", async (req, res) => {
         res.status(200)
             .cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                secure: true,
-                sameSite: "None"
+                secure: false,
+                sameSite: "Lax"
             }).cookie("accessToken", accessToken, {
                 httpOnly: true,
-                secure: true,
-                sameSite: "None"
+                secure: false,
+                sameSite: "Lax"
             }).json({ success: true, redirectUrl: "/api/adminprofile", message: "Admin logged in successfully " });
 
     } catch (error) {
