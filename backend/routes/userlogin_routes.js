@@ -31,8 +31,8 @@ router.post("/login", async (req, res) => {
 
         // ✅ Set Tokens in Cookies
         res.status(200)
-            .cookie("accessToken", accessToken, { httpOnly: true, secure: true, sameSite: "None" })
-            .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, sameSite: "None" })
+            .cookie("accessToken", accessToken, { httpOnly: true, secure: false, sameSite: "Lax" })
+            .cookie("refreshToken", refreshToken, { httpOnly: true, secure: false, sameSite: "Lax" })
             .json({ success: true, redirectUrl: "/api/profile", message: "User logged in successfully" });
 
     } catch (error) {
