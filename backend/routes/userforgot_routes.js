@@ -34,7 +34,7 @@ router.post("/forgot-password", async (req, res) => {
         await donor.save();
   
         // 🔸 Send Reset Email
-        const resetLink = `/reset-password/?token=${resetToken}&userType=users`;
+        const resetLink = `process.env.RESET_LINK/reset-password/?token=${resetToken}&userType=users`;
         ;
         await transporter.sendMail({
             from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
