@@ -82,7 +82,7 @@ router.post("/donorform", authenticateUser, async (req, res) => {
     // Send confirmation email
     await sendWelcomeEmail(Email);
 
-    res.status(201).json({ msg: "Registration successful" });
+    res.status(201).json({ msg: "Registration successful",redirectUrl: "/api/profile" });
     
   } catch (error) {
     console.error("Error:", error);
