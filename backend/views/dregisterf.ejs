@@ -141,7 +141,7 @@
                 if (response.ok) {
                     alert("✅ Registration Successful!");
                     document.getElementById("message").textContent = ""; // Clear error messages
-                    window.location.href="result.redirectUrl";
+                    window.history.back();
                 } else {
                     document.getElementById("message").textContent = result.msg || "⚠️ Error submitting form.";
                 }
