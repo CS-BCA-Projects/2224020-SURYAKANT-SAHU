@@ -53,7 +53,7 @@ router.post("/donorform", authenticateUser, async (req, res) => {
     console.log(req.user);
     const userId = req.user.userId;
     // Check if donor already exists
-    const existingDonor = await Donorregister.findById({ userId });
+    const existingDonor = await Donorregister.findOne({ userId });
     if (existingDonor) {
       return res.status(400).json({ msg: "You have already registered" });
     }
