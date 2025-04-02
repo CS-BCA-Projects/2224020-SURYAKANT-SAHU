@@ -142,6 +142,7 @@
                     alert("✅ Registration Successful!");
                     document.getElementById("message").textContent = ""; // Clear error messages
                     window.history.back();
+                    location.reload();
                 } else {
                     document.getElementById("message").textContent = result.msg || "⚠️ Error submitting form.";
                 }
