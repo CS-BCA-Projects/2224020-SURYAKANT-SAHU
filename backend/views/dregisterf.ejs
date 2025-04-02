@@ -143,7 +143,7 @@ ul<!DOCTYPE html>
                     document.getElementById("message").textContent = ""; // Clear error messages
                     window.history.back();
                 } else {
-                    alert(result.msg)
+                    document.getElementById("message").textContent = "user already exist"; 
                 }
             } catch (error) {
                 console.error("Error:", error);
