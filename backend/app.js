@@ -39,10 +39,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-app.use(cors({
-    origin: "http://localhost:5000", // Adjust if frontend runs on a different port
-    credentials: true,
-}));
+app.use(cors());
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
