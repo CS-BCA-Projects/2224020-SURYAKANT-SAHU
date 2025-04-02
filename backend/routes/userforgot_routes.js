@@ -36,12 +36,17 @@ router.post("/forgot-password", async (req, res) => {
         // 🔸 Send Reset Email
         const resetLink = `process.env.RESET_LINK/reset-password/?token=${resetToken}&userType=users`;
         ;
+
+        try{
         await transporter.sendMail({
             from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
             to: email,
             subject: "Reset Your Password",
             html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 15 minutes.</p>`
         });
+        }catch(err){
+          return res.status(500).json({message : "error found in sending mail"})
+        }
   
         res.json({ message: "✅ Password reset link sent to your email!" });
   
