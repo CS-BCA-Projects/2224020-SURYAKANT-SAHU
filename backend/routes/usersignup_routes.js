@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   }
 });
-console.log(process.env.SMTP_HOST ,process.env.EMAIL_USER,process.env.EMAIL_PASS,process.env.SMTP_PORT)
+
 
 // Function to send a welcome email
 const sendWelcomeEmail = (userEmail) => {
@@ -38,7 +38,7 @@ const sendWelcomeEmail = (userEmail) => {
 //  Register a New User
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
-
+ console.log(process.env.SMTP_HOST ,process.env.EMAIL_USER,process.env.EMAIL_PASS,process.env.SMTP_PORT)
   try {
     // Check if username already exists
     const existingUser = await Donor.findOne({ username });
