@@ -45,6 +45,7 @@ router.post("/forgot-password", async (req, res) => {
             html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 15 minutes.</p>`
         });
         }catch(err){
+          console.log("something went wrong in sending email");
           return res.status(500).json({message : "error found in sending mail"})
         }
   
