@@ -142,8 +142,7 @@
                     alert("✅ Registration Successful!");
                     document.getElementById("donorForm").reset(); // Reset the form
                     document.getElementById("message").textContent = ""; // Clear error messages
-                    window.history.back();
-                    location.reload();
+                    window.location.href="result.redirectUrl;
                 } else {
                     document.getElementById("message").textContent = result.msg || "⚠️ Error submitting form.";
                 }
