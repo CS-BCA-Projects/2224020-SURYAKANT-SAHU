@@ -20,7 +20,7 @@ router.post("/forgot-password", async (req, res) => {
     try {
         const { email} = req.body;
         const donor = await Donor.findOne({ email });
-  
+        console.log(email);
         if (!donor) {
             return res.status(400).json({ message: "❌ Email not found!" });
         }
