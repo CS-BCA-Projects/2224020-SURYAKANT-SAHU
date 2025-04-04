@@ -1,12 +1,24 @@
 // In subfolder file
-import dotenv from 'dotenv';
-dotenv.config({ path: require('path').resolve(__dirname, '../.env') });
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import nodemailer from 'nodemailer'
 import Donor from '../models/user_signup.js'
+// In your subfolder file (e.g., src/utils/email.js)
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env from project root
+dotenv.config({ 
+  path: path.resolve(__dirname, '../.env') 
+});
 
 const router = express.Router();
+
 console.log(process.env.EMAIL_PASS,process.env.EMAIL_USER,process.env.MONGODB_URI)
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
