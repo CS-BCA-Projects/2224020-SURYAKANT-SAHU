@@ -1,36 +1,9 @@
 import express from "express";
 import Donorregister from "../models/donorregisterform.js";
-import nodemailer from "nodemailer";
+import sendEmail from '../utils/send_mail.js';
 import {authenticateUser} from "../middlewares/authMiddleware.js"; 
 
 const router = express.Router(); // FIXED: use express.Router()
-
-// Nodemailer setup
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT, // Use 587 instead of 465
-  secure: true, // false for STARTTLS (recommended)
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-const sendWelcomeEmail = async (userEmail) => {
-  const mailOptions = {
-    from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
-    to: userEmail,
-    subject: "Thank You for Registering as a Donor",
-    text: "Thank you for registering as a donor. Your contribution can save lives!",
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully to:", userEmail);
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
-};
 
 router.post("/donorform", authenticateUser, async (req, res) => {
   try {
@@ -80,7 +53,11 @@ router.post("/donorform", authenticateUser, async (req, res) => {
     await newDonor.save();
 
     // Send confirmation email
-    await sendWelcomeEmail(Email);
+    const emailSent = await sendEmail (
+      userEmail,
+       "Thank You for Registering as a Donor",
+       "Thank you for registering as a donor. Your contribution can save lives!"
+    );
 
     res.status(201).json({ msg: "Registration successful" });
     
