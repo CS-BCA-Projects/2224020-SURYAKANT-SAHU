@@ -1,3 +1,6 @@
+// In subfolder file
+import dotenv from 'dotenv';
+dotenv.config({ path: require('path').resolve(__dirname, '../.env') });
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import nodemailer from 'nodemailer'
