@@ -1,18 +1,7 @@
 import express from "express";
-import nodemailer from "nodemailer";
+import sendEmail from '../utils/send_mail.js';
 
 const router = express.Router(); // Fix: Use Router
-
-// Configure email transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT, // Use 587 instead of 465
-    secure: true, // false for STARTTLS (recommended)
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
 
 // Request blood from a donor
 router.post("/request_blood", async (req, res) => {
@@ -23,19 +12,15 @@ router.post("/request_blood", async (req, res) => {
         return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Define mailOptions inside the function
-    const mailOptions = {
-        from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
-        to: donorEmail,
-        subject: "Blood Donation Request",
-        text: `Dear Donor,\n\n${name} is requesting for a blood donation.\n\nContact: ${contact}\n\nEmail : ${email}`
-    };
-    console.log("Using Email:", process.env.EMAIL_USER);
-console.log("Using Password:", process.env.EMAIL_PASS ? "Present" : "Missing");
-
     try {
-        await transporter.sendMail(mailOptions);
-        res.json({ message: "Request sent successfully!" });
+          const emailSent = await sendEmail(
+          donorEmail,
+          "Blood Donation Request",
+          `Dear Donor,\n\n${name} is requesting for a blood donation.\n\nContact: ${contact}\n\nEmail : ${email}`
+          );
+          if(!emailSent){
+            return res.status(400).json("error in sendin mail");
+          }
     } catch (error) {
         console.error("Error sending email:", error);
         res.status(500).json({ message: "Error sending email" });
