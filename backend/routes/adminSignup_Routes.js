@@ -2,36 +2,10 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import Admin from "../models/admin_signup.js";
-import nodemailer from 'nodemailer'
+import sendEmail from '../utils/send_mail.js';
 
-dotenv.config();
 const router = express.Router();
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,// Use 587 instead of 465
-  secure: true, // false for STARTTLS (recommended)
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-const sendWelcomeEmail = (userEmail) => {
-    const mailOptions = {
-      from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
-      to: userEmail,
-      subject: "Welcome to Our Website!",
-      text: "Thank you for signing up! We're excited to have you on board.",
-    };
-  
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Error sending email:", error);
-      } else {
-        console.log("Email sent:", info.response);
-      }
-    });
-  };
 // Handle admin signup
 router.post("/signup", async (req, res) => {
     const { FullName, Email, Password, AdminKey } = req.body;
@@ -61,7 +35,12 @@ router.post("/signup", async (req, res) => {
         });
 
         await newAdmin.save();
-        sendWelcomeEmail(Email);
+            // Send confirmation email
+      const emailSent = await sendEmail (
+      Email,
+       "Welcome to Our Website!",
+       "Thank you for signing up! We're excited to have you on board."
+    );
         res.status(201).json({ msg: "Admin registered successfully!" });
 
     } catch (error) {
