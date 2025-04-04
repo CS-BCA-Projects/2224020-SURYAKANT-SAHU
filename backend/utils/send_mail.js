@@ -38,4 +38,4 @@ const sendEmail = async (to, subject,html) => {
   }
 }
 
-export default sendMail;
+export default sendEmail;
