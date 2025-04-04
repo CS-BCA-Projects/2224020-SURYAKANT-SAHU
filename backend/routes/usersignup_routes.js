@@ -6,7 +6,7 @@ import Donor from '../models/user_signup.js'
 const router = express.Router();
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
+  host: "smtp.gmail.com",
   port: process.env.SMTP_PORT, // Use 587 instead of 465
   secure: false, // false for STARTTLS (recommended)
   auth: {
