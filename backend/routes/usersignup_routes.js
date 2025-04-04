@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 // Load .env from project root
 dotenv.config({ 
-  path: path.resolve(__dirname, '../.env') 
+  path: path.resolve(__dirname, '../../.env') 
 });
 
 const router = express.Router();
