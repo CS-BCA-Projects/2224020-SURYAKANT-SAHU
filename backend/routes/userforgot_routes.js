@@ -1,19 +1,10 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import nodemailer from 'nodemailer'
+import sendEmail from '../utils/send_mail.js';
 import Donor from '../models/user_signup.js'
 
 const router = express.Router();
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT, // Use 587 instead of 465
-  secure: true, // false for STARTTLS (recommended)
-  auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-  }
-});
 
 // 🔹 Forgot Password - Generate Reset Token
 router.post("/forgot-password", async (req, res) => {
@@ -38,12 +29,15 @@ router.post("/forgot-password", async (req, res) => {
         ;
 
         try{
-        await transporter.sendMail({
-            from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
-            to: email,
-            subject: "Reset Your Password",
-            html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 15 minutes.</p>`
-        });
+        const emailSent = await sendEmail(
+          email,
+          "Please reset your password here",
+          `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 15 minutes.</p>`
+          );
+
+          if(!emailSent){
+            return res.status(400).json("error in sendin mail");
+          }
         }catch(err){
           console.log("something went wrong in sending email");
           return res.status(500).json({message : "error found in sending mail"})
