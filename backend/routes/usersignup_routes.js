@@ -1,59 +1,15 @@
 // In subfolder file
 import express from 'express'
 import bcrypt from 'bcryptjs'
-import nodemailer from 'nodemailer'
 import Donor from '../models/user_signup.js'
-// In your subfolder file (e.g., src/utils/email.js)
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Get __dirname equivalent in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Load .env from project root
-dotenv.config({ 
-  path: path.resolve(__dirname, '../../.env') 
-});
+import sendEmail from '../utils/send_mail.js';
 
 const router = express.Router();
-
-console.log(process.env.EMAIL_PASS,process.env.EMAIL_USER,process.env.MONGODB_URI)
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465, // Use 587 instead of 465
-  secure: true, // false for STARTTLS (recommended)
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-
-
-// Function to send a welcome email
-const sendWelcomeEmail = (userEmail) => {
-  const mailOptions = {
-    from: '"Blood Donation System" <suryakantsahu7879@gmail.com>',
-    to: userEmail,
-    subject: "Welcome to Our Website!",
-    text: "Thank you for signing up! We're excited to have you on board.",
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-    } else {
-      console.log("Email sent:", info.response);
-    }
-  });
-};
 
 
 //  Register a New User
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
- console.log(process.env.SMTP_HOST ,process.env.EMAIL_USER,process.env.EMAIL_PASS,process.env.SMTP_PORT)
   try {
     // Check if username already exists
     const existingUser = await Donor.findOne({ username });
@@ -71,7 +27,15 @@ router.post("/signup", async (req, res) => {
 
     await donor.save();
 
-    sendWelcomeEmail(email);
+    const emailSent = await sendEmail (
+      email,
+      "Thankyou for sigining in Blood Donation",
+      `<p>You are successfully registered for blood donation</p>`
+    );
+
+    if(!emailSent){
+      return res.status(400).json({message : "email sending error"});
+    }
 
     res.status(201).json({ msg: "User signup successfully" });
   } catch (error) {
