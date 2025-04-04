@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer'
 import Donor from '../models/user_signup.js'
 
 const router = express.Router();
-console.log(process.env.EMAIL_PASS,process.env.EMAIL_USER)
+console.log(process.env.EMAIL_PASS,process.env.EMAIL_USER,process.env.MONGODB_URI)
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465, // Use 587 instead of 465
