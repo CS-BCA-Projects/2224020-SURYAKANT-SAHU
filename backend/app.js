@@ -95,7 +95,7 @@ app.get("/donor", (req, res) => {
     res.render("donoravailable");
 });
 app.get("/admin/signup", (req, res) => {
-    res.render("adminSignup");
+    res.render("adminsignup");
 });
 app.get("/admin/login", (req, res) => {
     res.render("adminlogin");
