@@ -24,7 +24,7 @@ router.post("/forgot-password", async (req, res) => {
         const { email} = req.body;
         console.log(email)
         const admin = await Admin.findOne({ email });   
-      console.log("admin is:"admin)
+      console.log("admin is:",admin)
         if (!admin) {
             return res.status(400).json({ message: "❌ Email not found!" });
         }
