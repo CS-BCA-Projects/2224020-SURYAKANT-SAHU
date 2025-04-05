@@ -23,6 +23,7 @@ router.post("/forgot-password", async (req, res) => {
     try {
         const { email} = req.body;
         console.log(email)
+      const Email=email;
         const admin = await Admin.findOne({ email });   
       console.log("admin is:",admin)
         if (!admin) {
