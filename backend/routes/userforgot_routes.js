@@ -2,8 +2,20 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import sendEmail from '../utils/send_mail.js';
 import Donor from '../models/user_signup.js'
-
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 const router = express.Router();
+
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env from project root
+dotenv.config({ 
+  path: path.resolve(__dirname, '../../.env') 
+});
 
 
 // 🔹 Forgot Password - Generate Reset Token
