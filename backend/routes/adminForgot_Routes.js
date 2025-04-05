@@ -21,9 +21,8 @@ dotenv.config({
 // 🔹 Admin Forgot Password - Generate Reset Token
 router.post("/forgot-password", async (req, res) => {
     try {
-        const { Email} = req.body;
-        console.log(Email)
-        const admin = await Admin.findOne({ Email });        
+        const { email} = req.body;
+        const admin = await Admin.findOne({ email });        
         if (!admin) {
             return res.status(400).json({ message: "❌ Email not found!" });
         }
