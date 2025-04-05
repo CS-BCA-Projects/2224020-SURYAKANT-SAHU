@@ -37,7 +37,7 @@ router.post("/forgot-password", async (req, res) => {
         await admin.save();
 
         // Send Reset Email
-        const resetLink = `process.env.RESET_LINK/reset-password/?token=${resetToken}&userType=admin`;
+        const resetLink = `${process.env.RESET_LINK}/reset-password/?token=${resetToken}&userType=admin`;
 
       const emailSent = await sendEmail (
        Email,
