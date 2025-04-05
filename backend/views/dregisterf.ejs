@@ -139,7 +139,7 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert(result.msg);
+                    alert("successfully registered ");
                     document.getElementById("message").textContent = ""; // Clear error messages
                     window.history.back();
                 } else {
