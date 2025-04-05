@@ -22,6 +22,7 @@ dotenv.config({
 router.post("/forgot-password", async (req, res) => {
     try {
         const { email} = req.body;
+        console.log(email)
         const admin = await Admin.findOne({ email });        
         if (!admin) {
             return res.status(400).json({ message: "❌ Email not found!" });
