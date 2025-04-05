@@ -54,7 +54,7 @@ router.post("/donorform", authenticateUser, async (req, res) => {
 
     // Send confirmation email
     const emailSent = await sendEmail (
-      userEmail,
+      Email,
        "Thank You for Registering as a Donor",
        "Thank you for registering as a donor. Your contribution can save lives!"
     );
