@@ -5,7 +5,7 @@ import {authenticateUser} from "../middlewares/authMiddleware.js";
 
 const router = express.Router(); // FIXED: use express.Router()
 
-router.post("/donorform", authenticateUser, async (req, res) => {
+router.post("/donorform", async (req, res) => {
   try {
     const {
       First_Name,
