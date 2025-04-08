@@ -141,14 +141,10 @@
                 if (response.ok) {
                     alert("successfully registered ");
                     document.getElementById("message").textContent = ""; // Clear error messages
-                    setTimeout(() => {
-                        window.location.href = result.redirecturl;
-                    }, 1000);
+                    window.history.back();
                 } else {
                     alert(result.msg)
-                    setTimeout(() => {
-                        window.location.href = result.redirecturl;
-                    }, 1000);
+                    window.history.back();
                 }
             } catch (error) {
                 console.error("Error:", error);
