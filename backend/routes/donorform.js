@@ -27,7 +27,7 @@ router.post("/donorform", async (req, res) => {
     // Check if donor already exists
     const existingDonor = await Donorregister.findOne({ userId });
     if (existingDonor) {
-      return res.status(400).json({ msg: "You have already registered",redirecturl:"/users/login" });
+      return res.status(400).json({ msg: "You have already registered" });
     }
 
     // Create new donor document
@@ -59,7 +59,7 @@ router.post("/donorform", async (req, res) => {
        "Thank you for registering as a donor. Your contribution can save lives!"
     );
 
-    res.status(201).json({ msg: "Registration successful",redirecturl:"/users/login" });
+    res.status(201).json({ msg: "Registration successful" });
     
   } catch (error) {
     console.error("Error:", error);
