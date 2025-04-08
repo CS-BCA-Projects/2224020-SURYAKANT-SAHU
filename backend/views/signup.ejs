@@ -73,7 +73,7 @@
             const result = await response.json();
             alert(result.msg); // Show success/error message
             setTimeout(() => {
-                    window.location.href = "/users/login";
+                    window.location.href = result.redirecturl;
                 }, 1000);
         });
 
