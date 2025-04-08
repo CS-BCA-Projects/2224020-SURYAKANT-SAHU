@@ -18,7 +18,7 @@ router.post("/signup", async (req, res) => {
     }
 
     let donor = await Donor.findOne({ email });
-    if (donor) return res.status(400).json({ msg: "User already exists",redirecturl:"/users/login" });
+    if (donor) return res.status(400).json({ msg: "User already exists" });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({message : "email sending error"});
     }
 
-    res.status(201).json({ msg: "User signup successfully",redirecturl:"/donor/donorform" });
+    res.status(201).json({ msg: "User signup successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
