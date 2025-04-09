@@ -93,9 +93,6 @@
 
             donors.forEach(donor => {
                 const row = document.createElement("tr");
-                const dhead = document.getElementById("donor-head");
-                const headbody = document.createElement("th");
-                headbody.innerHTML = "Actions";
 
                 // If donor is unverified, add action buttons
                 if (!verified && !donor.isVerifyed) {
