@@ -24,8 +24,8 @@ const UserSchema = new mongoose.Schema({
   isApproved: {
     type: Boolean,
     default: false,
-  }, { timestamps: true });
-});
+  }
+},{ timestamps: true });
 
 // **Middleware to Capitalize Fields Before Saving**
 UserSchema.pre("save", function (next) {
