@@ -111,7 +111,7 @@
                         <button onclick="rejectDonor('${donor._id}')">❌ Reject</button>
                     `;
                     row.appendChild(actionTd);
-                    dhead.appendChild(<th>Actions</th>);
+                    dhead.appendChild(`<th>Actions</th>`);
                 } 
                     if(verified && donor.isVerifyed){
                     row.innerHTML = `
