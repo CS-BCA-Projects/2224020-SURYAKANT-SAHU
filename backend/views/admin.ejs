@@ -49,16 +49,7 @@
                     </tr>
                 </thead>
                <tbody id="donor_table_body">
-                    <% donors.forEach(donor => { %>
-                    <tr data-isverified="<%= donor.isverified %>">
-                    <td><%= donor.First_Name %> <%= donor.Last_Name %></td>
-                    <td><%= donor.BloodGroup %></td>
-                    <td><%= donor.Gender %></td>
-                    <td><%= donor.State %>, <%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
-                    <td><%= donor.ContactNo %></td>
-                    <td><%= donor.Profession %></td>
-                    </tr>
-                        <% }); %>
+    
                 </tbody>
 
             </table>
@@ -68,26 +59,7 @@
     <!-- Support Request Modal -->
 
     <script>
-    document.getElementById("verify_donors").addEventListener("click", () => {
-        filterDonors(true);
-    });
-
-    document.getElementById("unverify_donors").addEventListener("click", () => {
-        filterDonors(false);
-    });
-
-    function filterDonors(showVerified) {
-        const rows = document.querySelectorAll('#donor_table_body tr');
-        rows.forEach(row => {
-            const isVerified = row.getAttribute('data-isverified') === 'true';
-            if (isVerified === showVerified) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-        document.getElementById("logout_button").addEventListener("click", async () => {
+      document.getElementById("logout_button").addEventListener("click", async () => {
             try {
                 const response = await fetch("/admin/logout", {
                     method: "POST",
@@ -106,7 +78,67 @@
                 console.error("Logout error:", error);
             }
         });
-            
+
+             async function fetchDonors(verified) {
+        try {
+            const res = await fetch(`/admin/donors?verified=${verified}`);
+            const donors = await res.json();
+
+            const tbody = document.getElementById("donor-table-body");
+            tbody.innerHTML = "";
+
+            if (donors.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7">No donors found.</td></tr>`;
+                return;
+            }
+
+            donors.forEach(donor => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${donor.First_Name} ${donor.Last_Name}</td>
+                    <td>${donor.BloodGroup}</td>
+                    <td>${donor.Gender}</td>
+                    <td>${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</td>
+                    <td>${donor.ContactNo}</td>
+                    <td>${donor.Profession}</td>
+                `;
+
+                // If donor is unverified, add action buttons
+                if (!donor.isVerified) {
+                    const actionTd = document.createElement("td");
+                    actionTd.innerHTML = `
+                        <button onclick="approveDonor('${donor._id}')">✅ Approve</button>
+                        <button onclick="rejectDonor('${donor._id}')">❌ Reject</button>
+                    `;
+                    row.appendChild(actionTd);
+                } else {
+                    // Add an empty <td> for layout alignment
+                    row.innerHTML += "<td></td>";
+                }
+
+                tbody.appendChild(row);
+            });
+        } catch (err) {
+            console.error("Error loading donors:", err);
+        }
+    }
+
+    async function approveDonor(donorId) {
+        const res = await fetch(`/admin/donors/approve/${donorId}`, { method: "PATCH" });
+        if (res.ok) fetchDonors(false); // refresh unverified list
+    }
+
+    async function rejectDonor(donorId) {
+        const res = await fetch(`/admin/donors/reject/${donorId}`, { method: "DELETE" });
+        if (res.ok) fetchDonors(false); // refresh unverified list
+    }
+
+    document.getElementById("verify_donors").addEventListener("click", () => fetchDonors(true));
+    document.getElementById("unverify_donors").addEventListener("click", () => fetchDonors(false));
+
+    // Load verified donors by default
+    fetchDonors(true);   
     </script>
 
 </body>
