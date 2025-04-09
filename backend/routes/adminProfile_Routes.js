@@ -26,31 +26,25 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
     }
 });
 // Approve donor
-router.post("/approve/:id", authenticateUser, async (req, res) => {
-  try {
-    const donor = await Donorregister.findByIdAndUpdate(
-      req.params.id,
-      { status: 'approved' },
-      { new: true }
-    );
-    res.redirect("/admin/adminprofile");
-  } catch (err) {
-    res.status(500).send("Server error");
-  }
+router.patch('/approve/:id', async (req, res) => {
+    try {
+        await Donorregister.findByIdAndUpdate(req.params.id, { isVerified: true });
+        res.json({ message: 'Donor approved' });
+    } catch (err) {
+        res.status(500).json({ error: 'Approval failed' });
+    }
 });
 
+
 // Reject donor
-router.post("/reject/:id", authenticateUser, async (req, res) => {
-  try {
-    const donor = await Donorregister.findByIdAndUpdate(
-      req.params.id,
-      { status: 'rejected' },
-      { new: true }
-    );
-    res.redirect("/admin/adminprofile");
-  } catch (err) {
-    res.status(500).send("Server error");
-  }
+router.delete('/reject/:id', async (req, res) => {
+    try {
+        await Donorregister.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Donor rejected and removed' });
+    } catch (err) {
+        res.status(500).json({ error: 'Rejection failed' });
+    }
 });
+
 
 export default router;
