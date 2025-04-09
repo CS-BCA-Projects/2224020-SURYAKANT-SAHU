@@ -39,7 +39,7 @@
             <h3>Current Blood Donation Info</h3>
             <table>
                 <thead>
-                    <tr style="color: white;">
+                    <tr style="color: white;" id = "donar-head">
                         <th>Name</th>
                         <th>Blood Group</th>
                         <th>Gender</th>
@@ -93,6 +93,7 @@
 
             donors.forEach(donor => {
                 const row = document.createElement("tr");
+                const dhead = document.getElementById("donor-head");
 
                 // If donor is unverified, add action buttons
                 if (!verified && !donor.isVerifyed) {
@@ -110,6 +111,7 @@
                         <button onclick="rejectDonor('${donor._id}')">❌ Reject</button>
                     `;
                     row.appendChild(actionTd);
+                    dhead.appendChild(<th>Actions</th>);
                 } 
                     if(verified && donor.isVerifyed){
                     row.innerHTML = `
