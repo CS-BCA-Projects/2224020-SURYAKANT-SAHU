@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   ContactNo: { type: String, required: true , sparse: true }, // Changed to String to prevent truncation
   Weight: { type: Number, required: true },
   Profession: { type: String, required: true },
-  isApproved: {
+  isVerifyed: {
     type: Boolean,
     default: false,
   }
