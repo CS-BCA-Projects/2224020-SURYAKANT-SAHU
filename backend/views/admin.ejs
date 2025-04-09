@@ -109,8 +109,8 @@
                 `;
                     const actionTd = document.createElement("td");
                     actionTd.innerHTML = `
-                        <button onclick="approveDonor('${donor._id}')">✅ Approve</button>
-                        <button onclick="rejectDonor('${donor._id}')">❌ Reject</button>
+                        <button onclick="approveDonor('${donor.userId}')">✅ Approve</button>
+                        <button onclick="rejectDonor('${donor.userId}')">❌ Reject</button>
                     `;
                     row.appendChild(actionTd);
                     dhead.appendChild(headbody);
