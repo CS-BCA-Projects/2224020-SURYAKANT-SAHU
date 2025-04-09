@@ -104,7 +104,7 @@
                 `;
 
                 // If donor is unverified, add action buttons
-                if (!donor.isVerified) {
+                if (!donor.isVerifyed) {
                     const actionTd = document.createElement("td");
                     actionTd.innerHTML = `
                         <button onclick="approveDonor('${donor._id}')">✅ Approve</button>
