@@ -22,7 +22,12 @@
     <div class="main-content" id="donor_container">
         <header>
             <h2>Dashboard</h2>
-
+            <button id="verify_donors">
+                Verify Donors
+            </button>
+            <button id="unverify_donors">
+                 UnVerify Donors
+            </button>
             <button id="logout_button">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -52,18 +57,6 @@
                             <td><%= donor.State %>, <%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
                             <td><%= donor.ContactNo %></td>
                             <td><%= donor.Profession %></td>
-                            <td>
-                            <% if (donor.status === 'pending') { %>
-                              <form action="/admin/approve/<%= donor._id %>" method="POST" style="display:inline;">
-                                <button type="submit">✅ Accept</button>
-                              </form>
-                              <form action="/admin/reject/<%= donor._id %>" method="POST" style="display:inline;">
-                                <button type="submit">❌ Reject</button>
-                              </form>
-                            <% } else { %>
-                              <%= donor.status %>
-                            <% } %>
-                          </td>
                         </tr>
                     <% }); %>
                 </tbody>
