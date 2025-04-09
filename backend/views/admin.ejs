@@ -48,18 +48,19 @@
                         <th>Profession</th>
                     </tr>
                 </thead>
-                <tbody>
+               <tbody id="donor_table_body">
                     <% donors.forEach(donor => { %>
-                        <tr>
-                            <td><%= donor.First_Name %> <%= donor.Last_Name  %></td>
-                            <td><%= donor.BloodGroup %></td>
-                            <td><%= donor.Gender %></td>
-                            <td><%= donor.State %>, <%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
-                            <td><%= donor.ContactNo %></td>
-                            <td><%= donor.Profession %></td>
-                        </tr>
-                    <% }); %>
+                    <tr data-isverified="<%= donor.isverified %>">
+                    <td><%= donor.First_Name %> <%= donor.Last_Name %></td>
+                    <td><%= donor.BloodGroup %></td>
+                    <td><%= donor.Gender %></td>
+                    <td><%= donor.State %>, <%= donor.District %> <%= donor.Block %> <%= donor.Pincode %></td>
+                    <td><%= donor.ContactNo %></td>
+                    <td><%= donor.Profession %></td>
+                    </tr>
+                        <% }); %>
                 </tbody>
+
             </table>
         </section>
     </div>
@@ -67,6 +68,25 @@
     <!-- Support Request Modal -->
 
     <script>
+    document.getElementById("verify_donors").addEventListener("click", () => {
+        filterDonors(true);
+    });
+
+    document.getElementById("unverify_donors").addEventListener("click", () => {
+        filterDonors(false);
+    });
+
+    function filterDonors(showVerified) {
+        const rows = document.querySelectorAll('#donor_table_body tr');
+        rows.forEach(row => {
+            const isVerified = row.getAttribute('data-isverified') === 'true';
+            if (isVerified === showVerified) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
         document.getElementById("logout_button").addEventListener("click", async () => {
             try {
                 const response = await fetch("/admin/logout", {
@@ -86,9 +106,8 @@
                 console.error("Logout error:", error);
             }
         });
-
+            
     </script>
-
 
 </body>
 
