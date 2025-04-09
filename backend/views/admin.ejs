@@ -83,7 +83,7 @@
         try {
             const donors = JSON.parse('<%- JSON.stringify(donors) %>');
 
-            const tbody = document.getElementById("donor-table-body");
+            const tbody = document.getElementById("donor_table_body");
             tbody.innerHTML = "";
 
             if (donors.length === 0) {
