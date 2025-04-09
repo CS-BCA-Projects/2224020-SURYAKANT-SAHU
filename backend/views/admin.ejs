@@ -81,8 +81,7 @@
 
              async function fetchDonors(verified) {
         try {
-            const res = await fetch(`/admin/donors?verified=${verified}`);
-            const donors = await res.json();
+            const donors = JSON.parse('<%- JSON.stringify(donors) %>');
 
             const tbody = document.getElementById("donor-table-body");
             tbody.innerHTML = "";
