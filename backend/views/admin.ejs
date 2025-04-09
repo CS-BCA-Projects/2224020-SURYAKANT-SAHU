@@ -110,7 +110,8 @@
                         <button onclick="rejectDonor('${donor._id}')">❌ Reject</button>
                     `;
                     row.appendChild(actionTd);
-                } else {
+                } 
+                    if(verified && donor.isVerifyed){
                     row.innerHTML = `
                     <td>${donor.First_Name} ${donor.Last_Name}</td>
                     <td>${donor.BloodGroup}</td>
