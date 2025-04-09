@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
   ContactNo: { type: String, required: true , sparse: true }, // Changed to String to prevent truncation
   Weight: { type: Number, required: true },
   Profession: { type: String, required: true },
+  isApproved: {
+    type: Boolean,
+    default: false,
+  }, { timestamps: true });
 });
 
 // **Middleware to Capitalize Fields Before Saving**
