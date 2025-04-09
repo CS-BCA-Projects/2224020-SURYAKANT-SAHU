@@ -94,7 +94,9 @@
             donors.forEach(donor => {
                 const row = document.createElement("tr");
 
-                row.innerHTML = `
+                // If donor is unverified, add action buttons
+                if (!verified && !donor.isVerifyed) {
+                    row.innerHTML = `
                     <td>${donor.First_Name} ${donor.Last_Name}</td>
                     <td>${donor.BloodGroup}</td>
                     <td>${donor.Gender}</td>
@@ -102,9 +104,6 @@
                     <td>${donor.ContactNo}</td>
                     <td>${donor.Profession}</td>
                 `;
-
-                // If donor is unverified, add action buttons
-                if (!verified && !donor.isVerifyed) {
                     const actionTd = document.createElement("td");
                     actionTd.innerHTML = `
                         <button onclick="approveDonor('${donor._id}')">✅ Approve</button>
@@ -112,8 +111,14 @@
                     `;
                     row.appendChild(actionTd);
                 } else {
-                    // Add an empty <td> for layout alignment
-                    row.innerHTML += "<td></td>";
+                    row.innerHTML = `
+                    <td>${donor.First_Name} ${donor.Last_Name}</td>
+                    <td>${donor.BloodGroup}</td>
+                    <td>${donor.Gender}</td>
+                    <td>${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</td>
+                    <td>${donor.ContactNo}</td>
+                    <td>${donor.Profession}</td>
+                `;
                 }
 
                 tbody.appendChild(row);
