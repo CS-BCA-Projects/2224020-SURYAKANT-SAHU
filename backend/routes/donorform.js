@@ -47,7 +47,7 @@ router.post("/donorform", authenticateUser,async (req, res) => {
       Gender,
       Profession,
       Pincode,
-      status: 'pending',
+
     });
 
     // Save to database
