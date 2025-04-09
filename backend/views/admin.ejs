@@ -134,12 +134,12 @@
     }
 
     async function approveDonor(donorId) {
-        const res = await fetch(`/admin/approve/${donorId}`, { method: "PATCH" });
+        const res = await fetch(`/api/approve/${donorId}`, { method: "PATCH" });
         if (res.ok) fetchDonors(false); // refresh unverified list
     }
 
     async function rejectDonor(donorId) {
-        const res = await fetch(`/admin/reject/${donorId}`, { method: "DELETE" });
+        const res = await fetch(`/api/reject/${donorId}`, { method: "DELETE" });
         if (res.ok) fetchDonors(false); // refresh unverified list
     }
 
