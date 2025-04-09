@@ -31,7 +31,7 @@ router.patch('/approve/:userId', async (req, res) => {
     try {
         const updated = await Donorregister.findOneAndUpdate(
             { userId: req.params.userId },
-            { isVerified: true },
+            { isVerifyed: true },
             { new: true }
         );
 
