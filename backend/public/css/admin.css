@@ -20,7 +20,14 @@ body {
     background-color: var(--secondary-color);
     color: var(--text-color);
 }
-
+#unverify_donors{
+    background: #d01010;
+    color: white;
+}
+#verify_donors{
+    background: green;
+    color: white;
+}
 /* Sidebar Styles */
 .sidebar {
     width: 280px;
