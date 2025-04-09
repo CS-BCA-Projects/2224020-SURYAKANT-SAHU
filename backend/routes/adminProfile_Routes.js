@@ -25,5 +25,32 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
         res.status(500).json({ message: "❌ Server error" });
     }
 });
+// Approve donor
+router.post("/approve/:id", authenticateUser, async (req, res) => {
+  try {
+    const donor = await Donorregister.findByIdAndUpdate(
+      req.params.id,
+      { status: 'approved' },
+      { new: true }
+    );
+    res.redirect("/admin/adminprofile");
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+// Reject donor
+router.post("/reject/:id", authenticateUser, async (req, res) => {
+  try {
+    const donor = await Donorregister.findByIdAndUpdate(
+      req.params.id,
+      { status: 'rejected' },
+      { new: true }
+    );
+    res.redirect("/admin/adminprofile");
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
 
 export default router;
