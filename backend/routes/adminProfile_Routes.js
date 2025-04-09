@@ -26,25 +26,43 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
     }
 });
 // Approve donor
-router.patch('/approve/:id', async (req, res) => {
+// PATCH /admin/donors/approve/:userId
+router.patch('/approve/:userId', async (req, res) => {
     try {
-        await Donorregister.findByIdAndUpdate(req.params.id, { isVerifyed: true });
-        res.json({ message: 'Donor approved' });
+        const updated = await Donorregister.findOneAndUpdate(
+            { userId: req.params.userId },
+            { isVerified: true },
+            { new: true }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ error: "Donor not found" });
+        }
+
+        res.json({ message: "Donor approved successfully", donor: updated });
     } catch (err) {
-        res.status(500).json({ error: 'Approval failed' });
+        console.error(err);
+        res.status(500).json({ error: "Approval failed" });
     }
 });
 
 
-// Reject donor
-router.delete('/reject/:id', async (req, res) => {
+// DELETE /admin/donors/reject/:userId
+router.delete('/reject/:userId', async (req, res) => {
     try {
-        await Donorregister.findByIdAndDelete(req.params.id);
-        res.json({ message: 'Donor rejected and removed' });
+        const deleted = await Donorregister.findOneAndDelete({ userId: req.params.userId });
+
+        if (!deleted) {
+            return res.status(404).json({ error: "Donor not found" });
+        }
+
+        res.json({ message: "Donor rejected and removed" });
     } catch (err) {
-        res.status(500).json({ error: 'Rejection failed' });
+        console.error(err);
+        res.status(500).json({ error: "Rejection failed" });
     }
 });
+
 
 
 export default router;
