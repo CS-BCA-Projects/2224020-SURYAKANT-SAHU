@@ -28,7 +28,7 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
 // Approve donor
 router.patch('/approve/:id', async (req, res) => {
     try {
-        await Donorregister.findByIdAndUpdate(req.params.id, { isVerified: true });
+        await Donorregister.findByIdAndUpdate(req.params.id, { isVerifyed: true });
         res.json({ message: 'Donor approved' });
     } catch (err) {
         res.status(500).json({ error: 'Approval failed' });
