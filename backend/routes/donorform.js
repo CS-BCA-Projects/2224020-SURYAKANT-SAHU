@@ -56,10 +56,10 @@ router.post("/donorform", authenticateUser,async (req, res) => {
     const emailSent = await sendEmail (
       Email,
        "Thank You for Registering as a Donor",
-       "Thank you for registering as a donor. Your contribution can save lives!"
+       "Request submitted! Pending admin approval."
     );
 
-    res.status(201).json({ msg: "Registration successful" });
+    res.status(201).json({ msg: "Request submitted! Pending admin approval." });
     
   } catch (error) {
     console.error("Error:", error);
