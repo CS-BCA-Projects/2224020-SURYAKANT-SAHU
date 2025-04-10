@@ -60,24 +60,29 @@ router.patch('/approve/:userId/:email', async (req, res) => {
 // DELETE /admin/donors/reject/:userId
 router.delete('/reject/:userId/:email', async (req, res) => {
     try {
-        const deleted = await Donorregister.findOneAndDelete({ userId: req.params.userId });
-        const email=req.params.email;
+        const { userId, email } = req.params;
+
+        const deleted = await Donorregister.findOneAndDelete({ userId: userId });
+
         if (!deleted) {
             return res.status(404).json({ error: "Donor not found" });
         }
 
-        res.json({ message: "Donor rejected and removed" });
-      const emailSent = await sendEmail (
-      email,
-      "Registeration rejected",
-      `<p>You are Rejected for blood donation you are not approved for blood donation by bloodlink.
-      please input correct information thankyou
-      </p>`
-    );
+        // Send rejection email before responding
+        await sendEmail(
+            email,
+            "Registration Rejected",
+            `<p>Your registration for blood donation has been <strong>rejected</strong> by BloodLink. 
+            Please ensure that all information provided is accurate. Thank you.</p>`
+        );
+
+        res.status(200).json({ message: "Donor rejected and removed" });
+
     } catch (err) {
-        console.error(err);
+        console.error("Rejection Error:", err);
         res.status(500).json({ error: "Rejection failed" });
     }
 });
+
 
 export default router;
