@@ -27,9 +27,9 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
 });
 // Approve donor
 // PATCH /admin/donors/approve/:userId
-router.patch('/approve?userId=${userId}&email=${encodeURIComponent(email)}', async (req, res) => {
+router.patch('/approve', async (req, res) => {
     try {
-        const { userId, email } = req.params;
+        const { userId, email } = req.query;
 
         // Update donor to verified
         const updated = await Donorregister.findOneAndUpdate(
@@ -60,7 +60,7 @@ router.patch('/approve?userId=${userId}&email=${encodeURIComponent(email)}', asy
 // DELETE /admin/donors/reject/:userId
 router.delete('/reject?userId=${userId}&email=${encodeURIComponent(email)}', async (req, res) => {
     try {
-        const { userId, email } = req.params;
+        const { userId, email } = req.query;
 
         const deleted = await Donorregister.findOneAndDelete({ userId: userId });
 
