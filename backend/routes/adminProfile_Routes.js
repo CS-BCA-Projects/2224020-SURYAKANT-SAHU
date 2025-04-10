@@ -13,8 +13,7 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
         const admin = await Admin.findOne(req.user._id).select("-Password"); // Exclude password
         const donors = await Donorregister.find();
         console.log(donors);
-        
-        
+
         if (!admin) {
             return res.status(404).json({ message: "❌ admin not found" });
         }
@@ -28,14 +27,14 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
 });
 // Approve donor
 // PATCH /admin/donors/approve/:userId
-router.patch('/approve/:userId', async (req, res) => {
+router.patch('/approve/:userId/:email', async (req, res) => {
     try {
         const updated = await Donorregister.findOneAndUpdate(
             { userId: req.params.userId },
             { isVerifyed: true },
             { new: true }
         );
-
+        const email=req.params.email;
         if (!updated) {
             return res.status(404).json({ error: "Donor not found" });
         }
@@ -52,12 +51,11 @@ router.patch('/approve/:userId', async (req, res) => {
     }
 });
 
-
 // DELETE /admin/donors/reject/:userId
-router.delete('/reject/:userId', async (req, res) => {
+router.delete('/reject/:userId/:email', async (req, res) => {
     try {
         const deleted = await Donorregister.findOneAndDelete({ userId: req.params.userId });
-
+        const email=req.params.email;
         if (!deleted) {
             return res.status(404).json({ error: "Donor not found" });
         }
@@ -75,7 +73,5 @@ router.delete('/reject/:userId', async (req, res) => {
         res.status(500).json({ error: "Rejection failed" });
     }
 });
-
-
 
 export default router;
