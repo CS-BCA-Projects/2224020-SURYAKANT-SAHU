@@ -29,27 +29,33 @@ router.get("/adminprofile", authenticateUser, async (req, res) => {
 // PATCH /admin/donors/approve/:userId
 router.patch('/approve/:userId/:email', async (req, res) => {
     try {
+        const { userId, email } = req.params;
+
+        // Update donor to verified
         const updated = await Donorregister.findOneAndUpdate(
-            { userId: req.params.userId },
+            { userId: userId },
             { isVerifyed: true },
             { new: true }
         );
-        const email=req.params.email;
+
         if (!updated) {
             return res.status(404).json({ error: "Donor not found" });
         }
-      const emailSent = await sendEmail (
-      email,
-      "Registeration successfully ",
-      `<p>You are successfully registered for blood donation you are approved for blood donation by bloodlink 
-      thankyou </p>`
-    );
-        res.json({ message: "Donor approved successfully", donor: updated });
+
+        // Send approval email
+        await sendEmail(
+            email,
+            "Registration Approved",
+            `<p>You have been successfully approved for blood donation by <strong>BloodLink</strong>. Thank you for registering!</p>`
+        );
+
+        res.status(200).json({ message: "Donor approved successfully", donor: updated });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Approval failed" });
+        console.error("Approval Error:", err);
+        res.status(500).json({ error: "Approval failed. Please try again later." });
     }
 });
+
 
 // DELETE /admin/donors/reject/:userId
 router.delete('/reject/:userId/:email', async (req, res) => {
