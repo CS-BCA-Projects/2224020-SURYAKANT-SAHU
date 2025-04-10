@@ -130,14 +130,44 @@
         }
     }
 
-    async function approveDonor(donorId) {
-        const res = await fetch(`/api/approve/${donorId}`, { method: "PATCH" });
-        if (res.ok) fetchDonors(false); // refresh unverified list
+     async function approveDonor(userId) {
+        try {
+            const res = await fetch(`/api/approve/${userId}`, {
+                method: "PATCH"
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message);
+                location.reload(); // Refresh the page
+            } else {
+                alert("Failed to approve donor");
+            }
+        } catch (error) {
+            console.error("Error approving donor:", error);
+            alert("Something went wrong.");
+        }
     }
 
-    async function rejectDonor(donorId) {
-        const res = await fetch(`/api/reject/${donorId}`, { method: "DELETE" });
-        if (res.ok) fetchDonors(false); // refresh unverified list
+        async function rejectDonor(userId) {
+        if (!confirm("Are you sure you want to reject this donor?")) return;
+
+        try {
+            const res = await fetch(`/api/reject/${userId}`, {
+                method: "DELETE"
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message);
+                location.reload(); // Refresh the page
+            } else {
+                alert("Failed to reject donor");
+            }
+        } catch (error) {
+            console.error("Error rejecting donor:", error);
+            alert("Something went wrong.");
+        }
     }
 
     document.getElementById("verify_donors").addEventListener("click", () => fetchDonors(true));
