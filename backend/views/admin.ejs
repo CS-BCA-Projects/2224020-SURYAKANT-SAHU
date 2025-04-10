@@ -106,8 +106,8 @@
                 `;
                     const actionTd = document.createElement("td");
                     actionTd.innerHTML = `
-                        <button onclick="approveDonor('${donor.userId}')">✅ Approve</button>
-                        <button onclick="rejectDonor('${donor.userId}')">❌ Reject</button>
+                        <button onclick="approveDonor('${donor.userId},${donor.Email}')">✅ Approve</button>
+                        <button onclick="rejectDonor('${donor.userId},${donor.Email}')">❌ Reject</button>
                     `;
                     row.appendChild(actionTd);
                    
@@ -130,9 +130,9 @@
         }
     }
 
-     async function approveDonor(userId) {
+     async function approveDonor(userId,email) {
         try {
-            const res = await fetch(`/api/approve/${userId}`, {
+            const res = await fetch(`/api/approve/${userId}/${email}`, {
                 method: "PATCH"
             });
 
@@ -149,11 +149,11 @@
         }
     }
 
-        async function rejectDonor(userId) {
+        async function rejectDonor(userId,email) {
         if (!confirm("Are you sure you want to reject this donor?")) return;
 
         try {
-            const res = await fetch(`/api/reject/${userId}`, {
+            const res = await fetch(`/api/reject/${userId}/${email}`, {
                 method: "DELETE"
             });
 
