@@ -131,7 +131,7 @@
             "Uttarakhand": ["Dehradun", "Haridwar", "Nainital", "Almora"],
             "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Siliguri"]
         };
-
+        let donorId = ''; 
         function updateDistricts() {
             let state = document.getElementById("stateDropdown").value;
             let districtDropdown = document.getElementById("districtDropdown");
@@ -182,12 +182,12 @@
             <td>${donor.First_Name}   ${donor.Last_Name}</td>
             <td>${donor.BloodGroup}</td>
             <td>${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</td>
-            <td><button onclick="showMenu('${donor.Email}')">Request</button></td>
+            <td><button onclick="showMenu('${donor.Email},${donor._id}')">Request</button></td>
         </tr>`;
                 tableBody.innerHTML += row;
             });
         }
-        async function requestBlood(donorEmail, name, contact , email) {
+        async function requestBlood(donorEmail, name, contact , email,donorId) {
 
             if (!name || !contact || !email) {
                 alert("All fields are required!");
@@ -198,23 +198,26 @@
                 const response = await fetch("/donor/request_blood", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ donorEmail, name, contact , email})
+                    body: JSON.stringify({ donorEmail, name, contact , email, donorId})
                 });
 
                 const data = await response.json();
+                donorId = '';
                 alert(data.message);
             } catch (error) {
                 console.error("Error requesting blood:", error);
             }
         }
-        function showMenu(donorEmail) {
+        function showMenu(donorEmail,Id) {
             document.getElementById("inputMenu").style.display = "block";
             document.getElementById("emailColumn").innerText = donorEmail;
+            donorId = Id;
         }
 
         // Function to hide the popup menu
         function hideMenu() {
             document.getElementById("inputMenu").style.display = "none";
+            donorId = '';
         }
 
         // Function to handle form submission
@@ -224,7 +227,7 @@
             const contact = document.getElementById("contact").value;
             const donorEmail = document.getElementById("emailColumn").innerText;
 
-            requestBlood(donorEmail, name, contact , email)
+            requestBlood(donorEmail, name, contact , email,donorId)
         }
 
     </script>
