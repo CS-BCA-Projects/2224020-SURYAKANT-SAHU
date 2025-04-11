@@ -52,7 +52,7 @@ button {
     background-color: #d32f2f;
     color: white;
     cursor: pointer;
-    width: 80%;
+    width: 50%;
 }
 
 button:hover {
