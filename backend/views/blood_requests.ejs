@@ -63,11 +63,40 @@ requesters.forEach(req => {
   card.innerHTML = `
     <h2>${req.name}</h2>
     <p><strong>Email:</strong> ${req.email}</p>
-    <p><strong>Contact:</strong> ${req.contact}</p>
+    <p><strong>Contact:</strong> ${req.contactNo}</p>
     <p><strong>Requested To:</strong> ${req.requestedTo}</p>
+    <div class="btn-group">
+      <button class="accept-btn" onclick="handleAccept('${req._id}')">Accept</button>
+      <button class="reject-btn" onclick="handleReject('${req._id}')">Reject</button>
+    </div>
   `;
 
   container.appendChild(card);
+});
+
+function handleAccept(id) {
+  fetch(`/api/requests/${id}/accept`, {
+    method: 'POST'
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(`Accepted request: ${data.message}`);
+      location.reload(); // optionally refresh to update list
+    })
+    .catch(err => console.error("Error accepting request:", err));
+}
+
+function handleReject(id) {
+  fetch(`/api/requests/${id}/reject`, {
+    method: 'POST'
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(`Rejected request: ${data.message}`);
+      location.reload(); // optionally refresh to update list
+    })
+    .catch(err => console.error("Error rejecting request:", err));
+}
 });
 
   </script>
