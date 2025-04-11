@@ -34,6 +34,7 @@ router.get("/request", authenticateUser, async (req, res) =>{
     try{
        const requester = await Request.find({requestedTo: req.user.userId }); 
         console.log(requester)
+        res.render('blood_requests',{requester})
     }
     catch(error){
          console.error(error);
