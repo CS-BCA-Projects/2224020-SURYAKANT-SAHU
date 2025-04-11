@@ -13,6 +13,7 @@ router.get("/donors", async (req, res) => {
     if (State) query.State = State;
     if (District) query.District = District;
     if (BloodGroup) query.BloodGroup = BloodGroup;
+    query.isVerifyed="true"
 
     try {
         const donors = await Donorregister.find(query);
