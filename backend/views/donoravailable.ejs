@@ -182,7 +182,7 @@
             <td>${donor.First_Name}   ${donor.Last_Name}</td>
             <td>${donor.BloodGroup}</td>
             <td>${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</td>
-            <td><button onclick="showMenu('${donor.Email}','${donor._id}')">Request</button></td>
+            <td><button onclick="showMenu('${donor.Email}','${donor.userId}')">Request</button></td>
         </tr>`;
                 tableBody.innerHTML += row;
             });
