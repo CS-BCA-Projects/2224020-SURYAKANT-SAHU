@@ -6,8 +6,8 @@ const router = express.Router(); // Fix: Use Router
 
 // Request blood from a donor
 router.post("/request_blood", async (req, res) => {
-    const { donorEmail, name, contact , email} = req.body;
-    console.log("Details are :", { donorEmail, name, contact , email} );
+    const { donorEmail, name, contact , email,donorId} = req.body;
+    console.log("Details are :", { donorEmail, name, contact , email,donorId} );
     
     if (!donorEmail || !name || !contact || !email) {
         return res.status(400).json({ message: "All fields are required" });
