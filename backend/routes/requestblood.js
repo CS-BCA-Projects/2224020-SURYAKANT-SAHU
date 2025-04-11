@@ -1,5 +1,6 @@
 import express from "express";
 import sendEmail from '../utils/send_mail.js';
+import Request from '../models/request.js'
 
 const router = express.Router(); // Fix: Use Router
 
@@ -11,7 +12,8 @@ router.post("/request_blood", async (req, res) => {
     if (!donorEmail || !name || !contact || !email) {
         return res.status(400).json({ message: "All fields are required" });
     }
-
+    const data= await Request.create({name , contact,email,requestedTo:donorId})
+    if(!data){return response.status(400).json({message:"error in registring request"})}
     try {
           const emailSent = await sendEmail(
           donorEmail,
