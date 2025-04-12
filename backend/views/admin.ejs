@@ -46,13 +46,13 @@
         </section>
     </div>
 
-    <!-- Donor Details Modal -->
-<div id="donorDetailsModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%);
- background-color:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.5); z-index:9999; max-width:500px; width:90%;">
-    <h3 style="margin-bottom: 15px;">Donor Details</h3>
-    <div id="donorDetailsContent" style="line-height: 1.6;"></div>
-    <button onclick="closeDonorDetails()" style="margin-top: 20px; background-color: red; color: white; padding: 10px 15px; border-radius: 5px;">Close</button>
-</div>
+    <!-- Donor Detail Modal -->
+    <div id="donorModal" style="display:none; position:fixed; top:20%; left:50%; transform:translate(-50%, -20%); background-color:white; padding:20px; border-radius:10px; box-shadow: 0 0 15px rgba(0,0,0,0.5); z-index:1000;">
+        <h3>Donor Details</h3>
+        <div id="donorDetailContent"></div>
+        <button onclick="closeModal()" style="margin-top: 15px; background-color:red; color:white; padding: 10px; border-radius: 5px;">Close</button>
+    </div>
+    <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
 
     <script>
         document.getElementById("logout_button").addEventListener("click", async () => {
@@ -99,7 +99,7 @@
                         actionTd.innerHTML = `
                             <button onclick="approveDonor('${donor.userId}', '${donor.Email}')" style="background-color: green; color: white; padding: 10px; border-radius: 5px;">Approve</button>
                             <button onclick="rejectDonor('${donor.userId}', '${donor.Email}')" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">Reject</button>
-                            <button onclick='viewDonorDetails(${JSON.stringify(donor)})' style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>
+                            <button onclick='viewDetails(${JSON.stringify(donor)})' style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>`;
 
                         row.appendChild(actionTd);
                     }
@@ -112,7 +112,7 @@
 
                         const actionTd = document.createElement("td");
                         actionTd.innerHTML = `
-                           <button onclick='viewDonorDetails(${JSON.stringify(donor)})' style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>
+                            <button onclick='viewDetails(${JSON.stringify(donor)})' style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>`;
 
                         row.appendChild(actionTd);
                     }
@@ -164,33 +164,27 @@
             }
         }
 
-        function viewDonorDetails(donor) {
-        const content = `
-        <p><strong>Name:</strong> ${donor.First_Name} ${donor.Last_Name}</p>
-        <p><strong>Blood Group:</strong> ${donor.BloodGroup}</p>
-        <p><strong>DOB:</strong> ${new Date(donor.DOB).toLocaleDateString()}</p>
-        <p><strong>Age:</strong> ${donor.Age}</p>
-        <p><strong>Gender:</strong> ${donor.Gender}</p>
-        <p><strong>Email:</strong> ${donor.Email}</p>
-        <p><strong>Contact No:</strong> ${donor.ContactNo}</p>
-        <p><strong>State:</strong> ${donor.State}</p>
-        <p><strong>District:</strong> ${donor.District}</p>
-        <p><strong>Block:</strong> ${donor.Block}</p>
-        <p><strong>Pincode:</strong> ${donor.Pincode}</p>
-        <p><strong>Weight:</strong> ${donor.Weight} kg</p>
-        <p><strong>Profession:</strong> ${donor.Profession}</p>
-        <p><strong>Created At:</strong> ${new Date(donor.createdAt).toLocaleString()}</p>
-        <p><strong>Updated At:</strong> ${new Date(donor.updatedAt).toLocaleString()}</p>
-        <p><strong>Verified:</strong> ${donor.isVerifyed ? 'Yes' : 'No'}</p>
-    `;
-    document.getElementById("donorDetailsContent").innerHTML = content;
-    document.getElementById("donorDetailsModal").style.display = "block";
-}
+        function viewDetails(donor) {
+            const content = `
+                <div><strong>Name:</strong> ${donor.First_Name} ${donor.Last_Name}</div>
+                <div><strong>Email:</strong> ${donor.Email}</div>
+                <div><strong>Contact No:</strong> ${donor.ContactNo}</div>
+                <div><strong>Address:</strong> ${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</div>
+            `;
+            document.getElementById("donorDetailContent").innerHTML = content;
+            document.getElementById("donorModal").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
 
-function closeDonorDetails() {
-    document.getElementById("donorDetailsModal").style.display = "none";
-}
+        function closeModal() {
+            document.getElementById("donorModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
 
+        document.getElementById("verify_donors").addEventListener("click", () => fetchDonors(true));
+        document.getElementById("unverify_donors").addEventListener("click", () => fetchDonors(false));
+
+        fetchDonors(true);
     </script>
 </body>
 
