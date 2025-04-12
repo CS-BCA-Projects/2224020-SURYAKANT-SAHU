@@ -95,13 +95,13 @@ router.post("/requests/:id/reject", async (req, res) => {
       "Blood Request rejected",
       `<h3>Dear ${request.name}</h3>,
 
-<p>We regret to inform you that your blood request has been rejected by the $(donor.First_Name) $(donor.Last_Name)</p> .
+<p>We regret to inform you that your blood request has been rejected by the</p> ${donor.First_Name} ${donor.Last_Name} .
 
 <p>You may try contacting other donors through the system.</p>
 
 Regards,
 Blood Donation System
-      `,
+    `
     );
 
     // Optional: Delete the request after handling
