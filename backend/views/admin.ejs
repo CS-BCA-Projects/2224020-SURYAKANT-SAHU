@@ -7,7 +7,6 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 
 <body>
@@ -22,12 +21,8 @@
     <div class="main-content" id="donor_container">
         <header>
             <h2>Dashboard</h2>
-            <button id="verify_donors">
-                Verify Donors
-            </button>
-            <button id="unverify_donors">
-                 UnVerify Donors
-            </button>
+            <button id="verify_donors">Verify Donors</button>
+            <button id="unverify_donors">UnVerify Donors</button>
             <button id="logout_button">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -39,25 +34,28 @@
             <h3>Current Blood Donation Info</h3>
             <table>
                 <thead>
-                    <tr style="color: white;" id = "donor-head">
+                    <tr style="color: white;" id="donor-head">
                         <th>Name</th>
                         <th>Blood Group</th>
                         <th>Gender</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-               <tbody id="donor_table_body">
-    
-                </tbody>
-
+                <tbody id="donor_table_body"></tbody>
             </table>
         </section>
     </div>
 
-    <!-- Support Request Modal -->
+    <!-- Donor Detail Modal -->
+    <div id="donorModal" style="display:none; position:fixed; top:20%; left:50%; transform:translate(-50%, -20%); background-color:white; padding:20px; border-radius:10px; box-shadow: 0 0 15px rgba(0,0,0,0.5); z-index:1000;">
+        <h3>Donor Details</h3>
+        <div id="donorDetailContent"></div>
+        <button onclick="closeModal()" style="margin-top: 15px; background-color:red; color:white; padding: 10px; border-radius: 5px;">Close</button>
+    </div>
+    <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
 
     <script>
-      document.getElementById("logout_button").addEventListener("click", async () => {
+        document.getElementById("logout_button").addEventListener("click", async () => {
             try {
                 const response = await fetch("/admin/logout", {
                     method: "POST",
@@ -77,105 +75,117 @@
             }
         });
 
-             async function fetchDonors(verified) {
-        try {
-            const donors = JSON.parse('<%- JSON.stringify(donors) %>');
+        async function fetchDonors(verified) {
+            try {
+                const donors = JSON.parse('<%- JSON.stringify(donors) %>');
+                const tbody = document.getElementById("donor_table_body");
+                tbody.innerHTML = "";
 
-            const tbody = document.getElementById("donor_table_body");
-            tbody.innerHTML = "";
-
-            if (donors.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7">No donors found.</td></tr>`;
-                return;
-            }
-
-            donors.forEach(donor => {
-                const row = document.createElement("tr");
-
-                // If donor is unverified, add action buttons
-                if (!verified && !donor.isVerifyed) {
-                    row.innerHTML = `
-                    <td>${donor.First_Name} ${donor.Last_Name}</td>
-                    <td>${donor.BloodGroup}</td>
-                    <td>${donor.Gender}</td>
-                `;
-                    const actionTd = document.createElement("td");
-                    actionTd.innerHTML = `
-                        <button onclick="approveDonor('${donor.userId}', '${donor.Email}')" style="background-color: green; color: white; padding: 10px; border-radius: 5px;">Approve</button>
-                        <button onclick="rejectDonor('${donor.userId}', '${donor.Email}')" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">Reject</button>
-                        <button style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>
-                    `;
-                    row.appendChild(actionTd);
-                   
-                } 
-                    if(verified && donor.isVerifyed){
-                    row.innerHTML = `
-                    <td>${donor.First_Name} ${donor.Last_Name}</td>
-                    <td>${donor.BloodGroup}</td>
-                    <td>${donor.Gender}</td>
-                `;
-
-                    const actionTd = document.createElement("td");
-                    actionTd.innerHTML = `
-                        <button style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>
-                    `;
-                    row.appendChild(actionTd);
+                if (donors.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7">No donors found.</td></tr>`;
+                    return;
                 }
 
-                tbody.appendChild(row);
-            });
-        } catch (err) {
-            console.error("Error loading donors:", err);
-        }
-    }
+                donors.forEach(donor => {
+                    const row = document.createElement("tr");
 
-     async function approveDonor(userId,email) {
-        try {
-            const res = await fetch(`/api/approve?userId=${userId}&email=${encodeURIComponent(email)}`, {
-                method: "PATCH"
-            });
+                    if (!verified && !donor.isVerifyed) {
+                        row.innerHTML = `
+                            <td>${donor.First_Name} ${donor.Last_Name}</td>
+                            <td>${donor.BloodGroup}</td>
+                            <td>${donor.Gender}</td>`;
 
-            const data = await res.json();
-            if (res.ok) {
-                alert(data.message);
-                location.reload(); // Refresh the page
-            } else {
-                alert("Failed to approve donor");
+                        const actionTd = document.createElement("td");
+                        actionTd.innerHTML = `
+                            <button onclick="approveDonor('${donor.userId}', '${donor.Email}')" style="background-color: green; color: white; padding: 10px; border-radius: 5px;">Approve</button>
+                            <button onclick="rejectDonor('${donor.userId}', '${donor.Email}')" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">Reject</button>
+                            <button onclick='viewDetails(${JSON.stringify(donor)})' style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>`;
+
+                        row.appendChild(actionTd);
+                    }
+
+                    if (verified && donor.isVerifyed) {
+                        row.innerHTML = `
+                            <td>${donor.First_Name} ${donor.Last_Name}</td>
+                            <td>${donor.BloodGroup}</td>
+                            <td>${donor.Gender}</td>`;
+
+                        const actionTd = document.createElement("td");
+                        actionTd.innerHTML = `
+                            <button onclick='viewDetails(${JSON.stringify(donor)})' style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>`;
+
+                        row.appendChild(actionTd);
+                    }
+
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                console.error("Error loading donors:", err);
             }
-        } catch (error) {
-            console.error("Error approving donor:", error);
-            alert("Something went wrong.");
         }
-    }
 
-        async function rejectDonor(userId,email) {
-        if (!confirm("Are you sure you want to reject this donor?")) return;
+        async function approveDonor(userId, email) {
+            try {
+                const res = await fetch(`/api/approve?userId=${userId}&email=${encodeURIComponent(email)}`, {
+                    method: "PATCH"
+                });
 
-        try {
-            const res = await fetch(`/api/reject?userId=${userId}&email=${encodeURIComponent(email)}`, {
-                method: "DELETE"
-            });
-
-            const data = await res.json();
-            if (res.ok) {
-                alert(data.message);
-                location.reload(); // Refresh the page
-            } else {
-                alert("Failed to reject donor");
+                const data = await res.json();
+                if (res.ok) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert("Failed to approve donor");
+                }
+            } catch (error) {
+                console.error("Error approving donor:", error);
+                alert("Something went wrong.");
             }
-        } catch (error) {
-            console.error("Error rejecting donor:", error);
-            alert("Something went wrong.");
         }
-    }
 
-    document.getElementById("verify_donors").addEventListener("click", () => fetchDonors(true));
-    document.getElementById("unverify_donors").addEventListener("click", () => fetchDonors(false));
+        async function rejectDonor(userId, email) {
+            if (!confirm("Are you sure you want to reject this donor?")) return;
 
-    // Load verified donors by default
-    fetchDonors(true);   
+            try {
+                const res = await fetch(`/api/reject?userId=${userId}&email=${encodeURIComponent(email)}`, {
+                    method: "DELETE"
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert("Failed to reject donor");
+                }
+            } catch (error) {
+                console.error("Error rejecting donor:", error);
+                alert("Something went wrong.");
+            }
+        }
+
+        function viewDetails(donor) {
+            const content = `
+                <div><strong>Name:</strong> ${donor.First_Name} ${donor.Last_Name}</div>
+                <div><strong>Email:</strong> ${donor.Email}</div>
+                <div><strong>Contact No:</strong> ${donor.ContactNo}</div>
+                <div><strong>Address:</strong> ${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</div>
+            `;
+            document.getElementById("donorDetailContent").innerHTML = content;
+            document.getElementById("donorModal").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("donorModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        document.getElementById("verify_donors").addEventListener("click", () => fetchDonors(true));
+        document.getElementById("unverify_donors").addEventListener("click", () => fetchDonors(false));
+
+        fetchDonors(true);
     </script>
-
 </body>
 
 </html>
