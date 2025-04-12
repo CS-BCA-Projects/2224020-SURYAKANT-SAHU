@@ -94,6 +94,7 @@ requesters.forEach(req => {
     <h2>${req.name}</h2>
     <p><strong>Email:</strong> ${req.email}</p>
     <p><strong>Contact:</strong> ${req.contact}</p>
+    <p><strong>Requested To:</strong> ${req.requestedTo}</p>
     <div class="btn-group">
       <button class="accept-btn" onclick="handleAccept('${req._id}')">Accept</button>
       <button class="reject-btn" onclick="handleReject('${req._id}')">Reject</button>
