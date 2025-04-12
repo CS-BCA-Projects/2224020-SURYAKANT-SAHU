@@ -101,9 +101,9 @@
                 `;
                     const actionTd = document.createElement("td");
                     actionTd.innerHTML = `
-                        <button onclick="approveDonor('${donor.userId}', '${donor.Email}')">Approve</button>
-                        <button onclick="rejectDonor('${donor.userId}', '${donor.Email}')">Reject</button>
-                        <button>View Details</button>
+                        <button onclick="approveDonor('${donor.userId}', '${donor.Email}')" style="background-color: green; color: white; padding: 10px; border-radius: 5px;">Approve</button>
+                        <button onclick="rejectDonor('${donor.userId}', '${donor.Email}')" style="background-color: red; color: white; padding: 10px; border-radius: 5px;">Reject</button>
+                        <button style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>
                     `;
                     row.appendChild(actionTd);
                    
@@ -117,7 +117,7 @@
 
                     const actionTd = document.createElement("td");
                     actionTd.innerHTML = `
-                        <button>View Details</button>
+                        <button style="background-color: blue; color: white; padding: 10px; border-radius: 5px;">View Details</button>
                     `;
                     row.appendChild(actionTd);
                 }
