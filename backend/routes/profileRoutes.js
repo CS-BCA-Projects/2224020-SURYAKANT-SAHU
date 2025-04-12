@@ -43,7 +43,7 @@ router.get("/request", authenticateUser, async (req, res) =>{
     }
 })
 
-router.post("/:id/accept", async (req, res) => {
+router.post("/requests/:id/accept", async (req, res) => {
   try {
     const request = await Request.findById(req.params.id);
 
@@ -82,7 +82,7 @@ router.post("/:id/accept", async (req, res) => {
 });
 
 // ❌ REJECT REQUEST
-router.post("/:id/reject", async (req, res) => {
+router.post("/requests/:id/reject", async (req, res) => {
   try {
     const request = await Request.findById(req.params.id);
 
