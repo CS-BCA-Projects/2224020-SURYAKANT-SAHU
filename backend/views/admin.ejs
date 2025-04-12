@@ -166,10 +166,22 @@
 
         function viewDetails(donor) {
             const content = `
-                <div><strong>Name:</strong> ${donor.First_Name} ${donor.Last_Name}</div>
-                <div><strong>Email:</strong> ${donor.Email}</div>
-                <div><strong>Contact No:</strong> ${donor.ContactNo}</div>
-                <div><strong>Address:</strong> ${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</div>
+                <p><strong>Name:</strong> ${donor.First_Name} ${donor.Last_Name}</p>
+        <p><strong>Blood Group:</strong> ${donor.BloodGroup}</p>
+        <p><strong>DOB:</strong> ${new Date(donor.DOB).toLocaleDateString()}</p>
+        <p><strong>Age:</strong> ${donor.Age}</p>
+        <p><strong>Gender:</strong> ${donor.Gender}</p>
+        <p><strong>Email:</strong> ${donor.Email}</p>
+        <p><strong>Contact No:</strong> ${donor.ContactNo}</p>
+        <p><strong>State:</strong> ${donor.State}</p>
+        <p><strong>District:</strong> ${donor.District}</p>
+        <p><strong>Block:</strong> ${donor.Block}</p>
+        <p><strong>Pincode:</strong> ${donor.Pincode}</p>
+        <p><strong>Weight:</strong> ${donor.Weight} kg</p>
+        <p><strong>Profession:</strong> ${donor.Profession}</p>
+        <p><strong>Created At:</strong> ${new Date(donor.createdAt).toLocaleString()}</p>
+        <p><strong>Updated At:</strong> ${new Date(donor.updatedAt).toLocaleString()}</p>
+        <p><strong>Verified:</strong> ${donor.isVerifyed ? 'Yes' : 'No'}</p>
             `;
             document.getElementById("donorDetailContent").innerHTML = content;
             document.getElementById("donorModal").style.display = "block";
