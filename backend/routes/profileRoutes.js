@@ -59,10 +59,10 @@ router.post("/requests/:id/accept", async (req, res) => {
         <p>Your blood request has been accepted!</p>
         
        <div> Here are the donor's details:
-        - Name: ${donor.name}
-        - Email: ${donor.email}
-        - Contact No: ${donor.contactNo}
-        - Address: ${donor.address || "Not Provided"}</div>
+        - Name: ${donor.First_Name}
+        - Email: ${donor.Email}
+        - Contact No: ${donor.ContactNo}
+        - Address: ${donor.State},${donor.District},${donor.Block},${donor.Pincode} || "Not Provided"}</div>
         
         <p>Please contact the donor as soon as possible.</p>
         
