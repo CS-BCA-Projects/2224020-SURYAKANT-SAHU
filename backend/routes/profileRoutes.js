@@ -50,7 +50,7 @@ router.post("/requests/:id/accept", async (req, res) => {
     if (!request) return res.status(404).json({ message: "Request not found" });
 
     const donor =await Donorregister.findOne({userId: request.requestedTo }); ;
-    console.log(donor);
+    console.log("this is donor detail:",donor);
      const emailSent = await sendEmail (
       request.email,
       "Blood Request Accepted",
