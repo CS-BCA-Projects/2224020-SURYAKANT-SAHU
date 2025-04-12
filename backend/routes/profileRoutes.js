@@ -102,7 +102,7 @@ You may try contacting other donors through the system.
 Regards,
 Blood Donation System
       `,
-    };
+    );
 
     await transporter.sendMail(mailOptions);
 
