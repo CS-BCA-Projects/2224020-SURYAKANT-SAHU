@@ -68,8 +68,8 @@ router.post("/:id/accept", async (req, res) => {
         
         Thank you,
         Bloodlink.com
-              `,`
-            );
+        `
+                );
 
     // Optional: Delete the request after handling
     await Request.findByIdAndDelete(req.params.id);
