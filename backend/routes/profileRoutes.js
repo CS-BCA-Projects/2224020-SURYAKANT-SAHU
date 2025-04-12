@@ -50,21 +50,21 @@ router.post("/requests/:id/accept", async (req, res) => {
     if (!request) return res.status(404).json({ message: "Request not found" });
 
     const donor =await Donorregister.findOne({userId: request.requestedTo }); ;
-
+    console.log(donor);
      const emailSent = await sendEmail (
       request.email,
       "Blood Request Accepted",
-      `Dear ${request.name},
+      `<h3>Dear ${request.name}</h3>,
 
-        Your blood request has been accepted!
+        <p>Your blood request has been accepted!</p>
         
-        Here are the donor's details:
+       <div> Here are the donor's details:
         - Name: ${donor.name}
         - Email: ${donor.email}
         - Contact No: ${donor.contactNo}
-        - Address: ${donor.address || "Not Provided"}
+        - Address: ${donor.address || "Not Provided"}</div>
         
-        Please contact the donor as soon as possible.
+        <p>Please contact the donor as soon as possible.</p>
         
         Thank you,
         Bloodlink.com
@@ -93,11 +93,11 @@ router.post("/requests/:id/reject", async (req, res) => {
     const emailSent = await sendEmail (
       request.email,
       "Blood Request rejected",
-      `Dear ${request.name},
+      `<h3>Dear ${request.name}</h3>,
 
-We regret to inform you that your blood request has been rejected by the $(donor.First_Name) $(donor.Last_Name) .
+<p>We regret to inform you that your blood request has been rejected by the $(donor.First_Name) $(donor.Last_Name)</p> .
 
-You may try contacting other donors through the system.
+<p>You may try contacting other donors through the system.</p>
 
 Regards,
 Blood Donation System
