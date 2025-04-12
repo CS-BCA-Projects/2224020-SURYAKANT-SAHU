@@ -92,6 +92,7 @@
         <button class="close-btn" onclick="hideMenu()">X</button>
         <h3>Enter Details</h3>
         <!-- Dynamic Email Column -->
+        <div class="email-display" id="emailColumn"></div>
         <input type="text" id="name" placeholder="Enter Name">
         <input type="email" id="email" placeholder="Enter Email">
         <input type="tel" id="contact" placeholder="Enter Contact">
@@ -181,12 +182,12 @@
             <td>${donor.First_Name}   ${donor.Last_Name}</td>
             <td>${donor.BloodGroup}</td>
             <td>${donor.State}, ${donor.District}, ${donor.Block}, ${donor.Pincode}</td>
-            <td><button onclick="showMenu('${donor.userId}')">Request</button></td>
+            <td><button onclick="showMenu('${donor.Email}','${donor.userId}')">Request</button></td>
         </tr>`;
                 tableBody.innerHTML += row;
             });
         }
-        async function requestBlood( name, contact , email,donorId) {
+        async function requestBlood(donorEmail, name, contact , email,donorId) {
 
             if (!name || !contact || !email) {
                 alert("All fields are required!");
@@ -197,7 +198,7 @@
                 const response = await fetch("/donor/request_blood", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, contact , email, donorId})
+                    body: JSON.stringify({ donorEmail, name, contact , email, donorId})
                 });
 
                 const data = await response.json();
@@ -207,7 +208,7 @@
                 console.error("Error requesting blood:", error);
             }
         }
-        function showMenu(Id) {
+        function showMenu(donorEmail,Id) {
             document.getElementById("inputMenu").style.display = "block";
          
             donorId = Id;
@@ -224,9 +225,9 @@
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const contact = document.getElementById("contact").value;
-            
+            const donorEmail = document.getElementById("emailColumn").innerText;
 
-            requestBlood( name, contact , email,donorId)
+            requestBlood(donorEmail, name, contact , email,donorId)
         }
 
     </script>
