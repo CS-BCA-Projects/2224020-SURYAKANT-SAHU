@@ -104,8 +104,6 @@ Blood Donation System
       `,
     );
 
-    await transporter.sendMail(mailOptions);
-
     // Optional: Delete the request after handling
     await Request.findByIdAndDelete(req.params.id);
 
