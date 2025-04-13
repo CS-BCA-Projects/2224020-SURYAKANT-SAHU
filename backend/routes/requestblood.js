@@ -23,6 +23,7 @@ router.post("/request_blood", async (req, res) => {
           if(!emailSent){
             return res.status(400).json("error in sendin mail");
           }
+        res.status(200).json({message:"succefully requested to the donor"})
     } catch (error) {
         console.error("Error sending email:", error);
         res.status(500).json({ message: "Error sending email" });
