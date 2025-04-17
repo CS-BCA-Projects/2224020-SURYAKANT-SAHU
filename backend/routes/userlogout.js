@@ -1,5 +1,17 @@
 import express from 'express';
 import Donor from '../models/user_signup.js';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env from project root
+dotenv.config({ 
+  path: path.resolve(__dirname, '../../.env') 
+});
 
 const router = express.Router();
 
