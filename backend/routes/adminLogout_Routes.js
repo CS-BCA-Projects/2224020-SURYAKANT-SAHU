@@ -15,8 +15,8 @@ router.post("/logout", async (req, res) => {
         await Admin.findOneAndUpdate({ refreshToken }, { refreshToken: null });
 
         // Clear the cookie and send success response
-        res.clearCookie("accessToken", { httpOnly: true, secure: true, sameSite: "strict" });
-        res.clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: "strict" });
+        res.clearCookie("accessToken", { httpOnly: true, secure: false, sameSite: "strict",path:"/" });
+        res.clearCookie("refreshToken", { httpOnly: true, secure: false, sameSite: "strict",path:"/" });
         return res.status(200).json({ success: true, msg: "Logged out successfully" });
 
     } catch (error) {
