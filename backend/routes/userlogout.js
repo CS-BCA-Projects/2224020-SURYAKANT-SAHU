@@ -1,17 +1,5 @@
 import express from 'express';
 import Donor from '../models/user_signup.js';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Get __dirname equivalent in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Load .env from project root
-dotenv.config({ 
-  path: path.resolve(__dirname, '../../.env') 
-});
 
 const router = express.Router();
 
@@ -27,8 +15,8 @@ router.post("/logout", async (req, res) => {
         await Donor.findOneAndUpdate({ refreshToken }, { refreshToken: null });
 
         // Clear the cookie and send success response
-        res.clearCookie("accessToken", { httpOnly: true, secure: true, sameSite: "strict",domain: "process.env.RESET_LINK", path: "/" });
-        res.clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: "strict",domain: "process.env.RESET_LINK", path: "/"  });
+        res.clearCookie("accessToken", { httpOnly: true, secure: false, sameSite: "strict",path: "/",});
+        res.clearCookie("refreshToken", { httpOnly: true, secure: false, sameSite: "strict",path: "/",});
         return res.status(200).json({ success: true, msg: "Logged out successfully" });
 
     } catch (error) {
